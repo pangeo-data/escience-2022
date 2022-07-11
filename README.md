@@ -8,7 +8,7 @@ Pangeo tutorial at FOSS4G 2022
     - [ ] Load and analyze data with `xarray`
       - [ ] NDVI time series analysis   
     - [ ] Visualize data with `hvplot`
-   - [ ] Example 2 (STAC):  Sentinel-2 Post-Fire Monitoring in Europe. See progress in `wildfires` branch.
+  - [ ] Example 2 (STAC):  Sentinel-2 Post-Fire Monitoring in Europe. See progress in `wildfires` branch.
     - [ ] Fetch [AWS Sentinel-2 Cloud-Optimized](https://registry.opendata.aws/sentinel-2-l2a-cogs/)
     - [ ] Load and analyze data with `xarray`
       - [ ] Compute dNBR
