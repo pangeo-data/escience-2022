@@ -13,6 +13,10 @@ Pangeo tutorial at FOSS4G 2022
     - [ ] Load and analyze data with `xarray`
       - [ ] Compute dNBR
     - [ ] Visualize data with `hvplot`
+  - [ ] Example 3:  Merging land and climate datasets.
+    - [ ] Fetch land and climate data
+    - [ ] Load and resample datasets with `xarray`
+    - [ ] Visualize data with `hvplot`
 - [ ] Dask basics
 
 ## Others
