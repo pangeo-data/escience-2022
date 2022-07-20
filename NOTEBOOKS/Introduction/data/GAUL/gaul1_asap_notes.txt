@@ -1,0 +1,12 @@
+asap1_id: sub-national unit id used to uniquely identify the unit in ASAP
+name1: name of the sub-national unit
+name1_shr: short name of the sub-national unit (max 16 characters)
+asap0_id: country id used to uniquely identify the unit in ASAP
+name0: name of the country
+name0_shr: short name of the country (max 16 characters)
+km2_tot: total area (in squared kilometers)
+km2_crop: crop area according to ASAP crop mask (in squared kilometers)
+km2_range: rangeland area according to ASAP rangeland mask (in squared kilometers)
+an_crop: if the crop conditions are analyzed (i.e. if warnings are generated for crop)
+an_range: if the rangeland conditions are analyzed (i.e. if warnings are generated for rangeland)
+water_lim: if the country is water limited (i.e. if water-related indicators are considered to compute warnings)

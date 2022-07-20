@@ -1,0 +1,11 @@
+{
+    "DIMENSION_LABELS": "lon",
+    "_ARRAY_DIMENSIONS": [
+        "lon"
+    ],
+    "_CoordinateAxisType": "Lon",
+    "axis": "X",
+    "long_name": "longitude",
+    "standard_name": "longitude",
+    "units": "degrees_east"
+}

@@ -1,0 +1,16 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "time",
+        "lat",
+        "lon"
+    ],
+    "cell_methods": "area: mean",
+    "grid_mapping": "crs",
+    "missing_value": 0,
+    "standard_name": "normalized_difference_vegetation_index number_of_observations",
+    "units": "",
+    "valid_range": [
+        1,
+        250
+    ]
+}

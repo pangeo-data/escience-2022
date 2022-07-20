@@ -1,0 +1,11 @@
+{
+    "DIMENSION_LABELS": "lat",
+    "_ARRAY_DIMENSIONS": [
+        "lat"
+    ],
+    "_CoordinateAxisType": "Lat",
+    "axis": "Y",
+    "long_name": "latitude",
+    "standard_name": "latitude",
+    "units": "degrees_north"
+}
