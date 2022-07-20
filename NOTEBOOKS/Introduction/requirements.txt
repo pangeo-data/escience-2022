@@ -1,0 +1,12 @@
+geopandas
+ipywidgets
+jupyterlab
+lxml
+matplotlib
+netcdf4
+numpy
+pandas
+rasterio
+rioxarray
+tqdm
+xarray
