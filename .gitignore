@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /NOTEBOOKS/Introduction/data/
+/NOTEBOOKS/Introduction/sandbox/
