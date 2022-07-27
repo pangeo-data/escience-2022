@@ -10,3 +10,5 @@ rasterio
 rioxarray
 tqdm
 xarray
+bottleneck
+scipy
