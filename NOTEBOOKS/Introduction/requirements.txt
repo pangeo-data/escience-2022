@@ -12,3 +12,5 @@ tqdm
 xarray
 bottleneck
 scipy
+geoviews
+cartopy
