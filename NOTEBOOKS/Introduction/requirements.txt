@@ -4,6 +4,7 @@ jupyterlab
 lxml
 matplotlib
 netcdf4
+numba
 numpy
 pandas
 rasterio
