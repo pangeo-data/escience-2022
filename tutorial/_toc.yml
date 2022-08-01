@@ -2,6 +2,33 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: setup
-chapters:
-- file: xarray_introduction
+root: intro
+parts:
+- caption: About
+  chapters:
+  - file: CONDUCT
+  - file: about
+
+- caption: Before the workshop
+  chapters:
+  - file: setup
+
+- caption: Introduction to Xarray
+  chapters:
+  - file: xarray_introduction
+
+- caption: Interactive visualization with hvplot
+  chapters:
+  - file: visualization
+
+- caption: Introduction to Dask
+  chapters:
+  - file: dask_introduction
+
+- caption: Beyond the workshop
+  chapters:
+  - file: beyond
+  - file: use-cases
+    sections:
+          - glob: notebooks/*
+  - file: dsenv-book
