@@ -1,0 +1,7 @@
+jupyter-book
+sphinx-exercise
+matplotlib
+numpy
+ghp-import
+xarray
+cftime
