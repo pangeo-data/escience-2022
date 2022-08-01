@@ -13,22 +13,20 @@ parts:
   chapters:
   - file: setup
 
-- caption: Introduction to Xarray
+- caption: Pangeo 101
   chapters:
   - file: xarray_introduction
-
-- caption: Interactive visualization with hvplot
-  chapters:
   - file: visualization
-
-- caption: Introduction to Dask
-  chapters:
   - file: dask_introduction
 
-- caption: Beyond the workshop
+- caption: Notebooks
   chapters:
-  - file: beyond
   - file: use-cases
     sections:
           - glob: notebooks/*
+  
+- caption: Beyond the workshop
+  chapters:
+  - file: beyond
+  - file: pythia
   - file: dsenv-book
