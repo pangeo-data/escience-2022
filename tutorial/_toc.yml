@@ -16,7 +16,9 @@ parts:
 - caption: Pangeo 101
   chapters:
   - file: xarray_introduction
+    title: Introduction to Xarray
   - file: visualization
+    title: Visualization with holoviews
   - file: dask_introduction
 
 - caption: Notebooks
