@@ -1,10 +1,12 @@
 name: deploy
 
 on:
-  # Trigger the workflow on push to main branch
+  # Trigger the workflow on push to main branch and tutorial path
   push:
     branches:
       - main
+    paths:
+      - tutorial/**
 
 # This job installs dependencies, build the book, and pushes it to `gh-pages`
 jobs:
