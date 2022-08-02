@@ -5,8 +5,7 @@ The FOSS4G 2022 Pangeo Workshop makes all of their materials publicly available 
 The process documents and data are made available under a CC-BY license.
 Software are made available under an MIT license.
 
-The  license text listed below (describing both CC-BY and MIT licenses as well as their usage in the FOSS4G 2022 Pangeo Workshop) is re-used under a CC-BY license from The Turing Way (see [LICENSE.md](https://github.com/alan-turing-institute/the-turing-way/edit/main/LICENSE.md)) and The Carpentries community materials.
-(see the [Reproducible Science Curriculum](https://github.com/Reproducible-Science-Curriculum/sharing-RR-Jupyter/blob/gh-pages/LICENSE.md)).
+The  license text listed below (describing both CC-BY and MIT licenses as well as their usage in the FOSS4G 2022 Pangeo Workshop) is re-used under a CC-BY license from The Turing Way (see [LICENSE.md](https://github.com/alan-turing-institute/the-turing-way/edit/main/LICENSE.md)) and The Carpentries community materials (see the [Reproducible Science Curriculum](https://github.com/Reproducible-Science-Curriculum/sharing-RR-Jupyter/blob/gh-pages/LICENSE.md)).
 
 ## Process documents and data
 
