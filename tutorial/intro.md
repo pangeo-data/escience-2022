@@ -1,4 +1,4 @@
-# Welcome to your Pangeo 101 for FOSS4G
+# Welcome 👋
 
 ## The European Open Science Cloud (EOSC)
 

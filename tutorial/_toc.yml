@@ -6,29 +6,36 @@ root: intro
 parts:
 - caption: About
   chapters:
-  - file: CONDUCT
-  - file: about
+  - file: about/timeline
+    title: Workshop timeline
+  - file: about/CONDUCT
+    title: Code of Conduct
 
 - caption: Before the workshop
   chapters:
-  - file: setup
+  - file: before/setup
 
 - caption: Pangeo 101
   chapters:
-  - file: xarray_introduction
-    title: Introduction to Xarray
-  - file: visualization
-    title: Visualization with holoviews
-  - file: dask_introduction
+  - file: pangeo101/xarray_introduction
+    title: Handling multi-dimensional arrays with xarray
+  - file: pangeo101/visualization
+    title: Interactive plotting with holoviews
+  - file: pangeo101/dask_introduction
+    title: Parallel computing with dask
 
 - caption: Notebooks
   chapters:
-  - file: use-cases
+  - file: notebooks/use-cases
     sections:
-          - glob: notebooks/*
-  
+    - file: notebooks/wildfires
+      title: Burn severity maps
+
 - caption: Beyond the workshop
   chapters:
-  - file: beyond
-  - file: pythia
-  - file: dsenv-book
+  - file: afterword/resources
+    title: Resources
+  - file: afterword/pythia
+    title: Project Pythia
+  - file: afterword/envds-book
+    title: Environmental Data Science Book
