@@ -8,7 +8,7 @@
 title                       : Pangeo Tutorial at FOSS4G 2022  # The title of the book. Will be placed in the left navbar.
 author                      : Pangeo Europe  # The author of the book
 copyright                   : "2022"  # Copyright year to be placed in the footer
-logo                        : pangeo_logo.png  # A path to the book logo
+logo                        : "./figures/pangeo_logo.png"  # A path to the book logo
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
