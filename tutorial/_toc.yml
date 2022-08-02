@@ -8,8 +8,6 @@ parts:
   chapters:
   - file: about/timeline
     title: Workshop timeline
-  - file: about/CONDUCT
-    title: Code of Conduct
 
 - caption: Before the workshop
   chapters:
