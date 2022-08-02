@@ -1,6 +1,17 @@
 # foss4g-2022
 Pangeo tutorial at FOSS4G 2022
 
+
+
+## The Event 
+A bit of context:
+
+Start of the event 18/07/2022
+Coordinates of the event: lat 43.89, lon 10.36
+
+News on the media:
+https://euroweeklynews.com/2022/07/19/fire-massarosa-lucca-italy/
+
 ## Outline
 - [ ] Access data
   - [ ] Example 1 (Local): NDVI time series analysis
