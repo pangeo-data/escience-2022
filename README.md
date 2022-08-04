@@ -1,4 +1,4 @@
-# Pangeo 1010 Turotial for FOSS4G 2022 Annula Gathering
+# Pangeo 1010 Tutorial for FOSS4G 2022 Annula Gathering
 
 This repository contains the documentation and jupyter notebooks used for delivering [the tutorial on Pangeo](https://talks.osgeo.org/foss4g-2022-workshops/talk/NF8BKU/) during the [FOSS4G 2022 conference](https://2022.foss4g.org/).
 
