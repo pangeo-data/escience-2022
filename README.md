@@ -1,7 +1,19 @@
-# foss4g-2022
-Pangeo tutorial at FOSS4G 2022
+# Pangeo 1010 Turotial for FOSS4G 2022 Annula Gathering
 
+This repository contains the documentation and jupyter notebooks used for delivering [the tutorial on Pangeo](https://talks.osgeo.org/foss4g-2022-workshops/talk/NF8BKU/) during the [FOSS4G 2022 conference](https://2022.foss4g.org/).
 
+<img src="tutorial/figures/pangeo_logo.png" width="180" align="Left" /></a>
+<img src="tutorial/figures/EGI-ACE_logo.png" width="180" align="Right" /></a>
+
+The content of this repository (folder `tutorial`) is rendered as an online document using [Jupyter Book](https://jupyterbook.org/en/stable/intro.html). **You can access it [here](pangeo-data.github.io/foss4g-2022)**.
+
+## FOSS4G Annual International Gathering
+
+[FOSS4G](https://foss4g.org/) stands for **Free and Open Source Software for Geospatial** and is the annual recurring global event hosted by [OSGeo](https://www.osgeo.org/), the non-profit organization that supports and promotes the collaborative development of free and open source geographic technologies and open geospatial data. 
+
+## FOSS4G Pangeo 101 workshop
+
+An [introduction to the Pangeo ecosystem](https://talks.osgeo.org/foss4g-2022-workshops/talk/NF8BKU/) will be provided at FOSS4G 2022 by the Pangeo Community. You will learn how to efficiently access, analyze and visualize geospatial data at scale. The workshop timeline, setup and content of the workshop are accessible via the left menu of this webpage.
 
 ## The Event 
 A bit of context:
