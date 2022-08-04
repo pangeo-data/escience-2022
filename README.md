@@ -7,7 +7,7 @@ This repository contains the documentation and jupyter notebooks used for delive
 
 <br>
 
-The content of this repository (folder `tutorial`) is rendered as an online document using [Jupyter Book](https://jupyterbook.org/en/stable/intro.html). **You can access it [here](pangeo-data.github.io/foss4g-2022)**.
+The content of this repository (folder `tutorial`) is rendered as an online document using [Jupyter Book](https://jupyterbook.org/en/stable/intro.html). **You can access it [here](https://pangeo-data.github.io/foss4g-2022)**.
 
 ## FOSS4G Annual International Gathering
 
