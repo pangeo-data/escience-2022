@@ -21,8 +21,8 @@ jobs:
 
     # Install dependencies
     - name: Install packages
-        sudo apt-get install proj-bin
       run: |
+        sudo apt-get install proj-bin
     # Install dependencies
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
