@@ -5,3 +5,6 @@ numpy
 ghp-import
 xarray
 cftime
+wget
+netcdf4
+h5netcdf
