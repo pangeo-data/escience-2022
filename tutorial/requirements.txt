@@ -4,7 +4,12 @@ matplotlib
 numpy
 ghp-import
 xarray
+rioxarray
 cftime
 wget
 netcdf4
 h5netcdf
+cartopy
+holoviews
+hvplot
+geopandas
