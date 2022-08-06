@@ -1,0 +1,21 @@
+name: foss4g
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - jupyter-book
+  - sphinx-exercise
+  - matplotlib
+  - numpy
+  - ghp-import
+  - xarray
+  - rioxarray
+  - cftime
+  - wget
+  - netcdf4
+  - h5netcdf
+  - cartopy
+  - holoviews
+  - hvplot
+  - geopandas
