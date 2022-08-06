@@ -11,12 +11,8 @@ on:
 # This job installs dependencies, build the jupyter notebook, and pushes it to `render`, a new `branch`
 jobs:
   build:
-    name: ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ["ubuntu-latest"]
+    name: Setup
+    runs-on: "ubuntu-latest"
     defaults:
       run:
         shell: bash -l {0}
@@ -25,15 +21,14 @@ jobs:
       - name: Set up conda and dependencies
         uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-update-conda: true
           activate-environment: foss4g
           environment-file: .binder/environment.yml
-
+          python-version: 3.10
+          channels: conda-forge
       # Build the book
       - name: Build the book
         run: |
           jupyter-book build tutorial
-
       # Deploy the book's HTML to gh-pages branch
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v3.6.1
