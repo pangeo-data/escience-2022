@@ -37,4 +37,3 @@ EOSC is run as a [co-programmed European Partnership under Horizon Europe from 2
 [EGI-ACE](https://www.egi.eu/project/egi-ace/) (EU H2020 project, January 2021 - June 2023) offers compute and storage resources, compute platform services, data management services and related user support and training through open calls. Majority of the services are sponsored (pre-paid) for the users by the European Commission and by national funding agencies. Some of the services are offered by commercial entities on a pay-per-use basis. 
 
 **For the deployment of Pangeo on EOSC, [CESNET](https://www.cesnet.cz/?lang=en) is the provider that freely offered computing resources and storage.**
-
