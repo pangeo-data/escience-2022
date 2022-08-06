@@ -5,7 +5,6 @@ channels:
 dependencies:
   - python
   - jupyter-book
-  - sphinx-exercise
   - matplotlib
   - numpy
   - ghp-import
@@ -19,3 +18,6 @@ dependencies:
   - holoviews
   - hvplot
   - geopandas
+  - pip
+  - pip:
+    - sphinx-exercise
