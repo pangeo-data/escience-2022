@@ -24,7 +24,6 @@ It is still under development and often difficult to understand what is made ava
 
 EOSC is run as a [co-programmed European Partnership under Horizon Europe from 2021](https://ec.europa.eu/info/horizon-europe/european-partnerships-horizon-europe/candidates-across-themes_en). [Horizon Europe](https://ec.europa.eu/info/horizon-europe_en) is the European Commission's research and innovation funding programme (started in 2021 and succeeding Horizon 2020 European programme).
 
-
 ## Pangeo Europe and EGI-ACE
 
 ![Pangeo logo](./figures/pangeo_name_logo.png) 
