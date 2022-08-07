@@ -17,6 +17,7 @@ dependencies:
   - holoviews
   - hvplot
   - geopandas
+  - pooch
   - pip
   - pip:
     - wget
