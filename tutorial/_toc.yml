@@ -19,6 +19,8 @@ parts:
     title: Handling multi-dimensional arrays with xarray
   - file: pangeo101/visualization
     title: Interactive plotting with holoviews
+  - file: pangeo101/data_discovery
+    title: Data Access and discovery
   - file: pangeo101/dask_introduction
     title: Parallel computing with dask
 
