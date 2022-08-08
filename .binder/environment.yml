@@ -18,6 +18,7 @@ dependencies:
   - hvplot
   - geopandas
   - pooch
+  - s3fs
   - pip
   - pip:
     - wget
