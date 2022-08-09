@@ -1,6 +1,6 @@
 # Pangeo 101 Tutorial for FOSS4G 2022 Annual Gathering
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This repository contains the documentation and jupyter notebooks used for delivering [the tutorial on Pangeo](https://talks.osgeo.org/foss4g-2022-workshops/talk/NF8BKU/) during the [FOSS4G 2022 conference](https://2022.foss4g.org/).
@@ -30,6 +30,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/acocac"><img src="https://avatars.githubusercontent.com/u/13321552?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alejandro ©</b></sub></a><br /><a href="#ideas-acocac" title="Ideas, Planning, & Feedback">🤔</a> <a href="#design-acocac" title="Design">🎨</a> <a href="https://github.com/pangeo-data/foss4g-2022/commits?author=acocac" title="Code">💻</a> <a href="#content-acocac" title="Content">🖋</a> <a href="https://github.com/pangeo-data/foss4g-2022/commits?author=acocac" title="Documentation">📖</a> <a href="#tutorial-acocac" title="Tutorials">✅</a></td>
+    <td align="center"><a href="http://www.mn.uio.no/geo/english/people/adm/annefou/"><img src="https://avatars.githubusercontent.com/u/8168508?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anne Fouilloux</b></sub></a><br /><a href="#ideas-annefou" title="Ideas, Planning, & Feedback">🤔</a> <a href="#design-annefou" title="Design">🎨</a> <a href="https://github.com/pangeo-data/foss4g-2022/commits?author=annefou" title="Code">💻</a> <a href="#content-annefou" title="Content">🖋</a> <a href="https://github.com/pangeo-data/foss4g-2022/commits?author=annefou" title="Documentation">📖</a> <a href="#tutorial-annefou" title="Tutorials">✅</a></td>
   </tr>
 </table>
 
