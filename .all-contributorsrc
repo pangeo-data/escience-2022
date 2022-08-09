@@ -101,6 +101,16 @@
         "platform",
         "infra"
       ]
+    },
+    {
+      "login": "micafer",
+      "name": "Miguel Caballer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4972699?v=4",
+      "profile": "https://github.com/micafer",
+      "contributions": [
+        "platform",
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 7,
