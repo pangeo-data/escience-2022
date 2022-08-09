@@ -71,6 +71,36 @@
         "review",
         "userTesting"
       ]
+    },
+    {
+      "login": "j34ni",
+      "name": "j34ni",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44261743?v=4",
+      "profile": "https://github.com/j34ni",
+      "contributions": [
+        "platform",
+        "infra"
+      ]
+    },
+    {
+      "login": "sebastian-luna-valero",
+      "name": "Sebastian Luna-Valero",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5345517?v=4",
+      "profile": "https://uk.linkedin.com/in/sebastianlunavalero/en",
+      "contributions": [
+        "platform",
+        "infra"
+      ]
+    },
+    {
+      "login": "sustr4",
+      "name": "Zdeněk Šustr",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1583737?v=4",
+      "profile": "https://github.com/sustr4",
+      "contributions": [
+        "platform",
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 7,
