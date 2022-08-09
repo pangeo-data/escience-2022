@@ -4,6 +4,7 @@
 The computing and storage resources used for this workshop have been kindly provided by [CESNET](https://www.cesnet.cz/?lang=en) in the frame of the [EGI-ACE](https://www.egi.eu/project/egi-ace/) project that provides advanced Computing for [EOSC](https://eosc-portal.eu/about/eosc).
 :::
 
+
 ## FOSS4G Annual International Gathering
 
 [FOSS4G](https://foss4g.org/) stands for **Free and Open Source Software for Geospatial** and is the annual recurring global event hosted by [OSGeo](https://www.osgeo.org/), the non-profit organization that supports and promotes the collaborative development of free and open source geographic technologies and open geospatial data. 
