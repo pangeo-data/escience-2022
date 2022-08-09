@@ -53,6 +53,6 @@
   "projectOwner": "pangeo-data",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
   "contributorsSortAlphabetically": true
 }
