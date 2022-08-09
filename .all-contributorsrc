@@ -60,6 +60,16 @@
         "doc",
         "tutorial"
       ]
+    },
+    {
+      "login": "guillaumeeb",
+      "name": "Guillaume Eynard-Bontemps",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17138587?v=4",
+      "profile": "https://github.com/guillaumeeb",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
