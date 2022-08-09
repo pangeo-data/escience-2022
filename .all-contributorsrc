@@ -70,6 +70,16 @@
         "ideas",
         "review"
       ]
+    },
+    {
+      "login": "j34ni",
+      "name": "j34ni",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44261743?v=4",
+      "profile": "https://github.com/j34ni",
+      "contributions": [
+        "platform",
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 7,
