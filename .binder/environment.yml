@@ -23,6 +23,7 @@ dependencies:
   - dask
   - fsspec
   - s3fs
+  - graphviz
   - pip
   - pip:
     - wget
