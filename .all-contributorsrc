@@ -54,4 +54,5 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true
+  "contributorsSortAlphabetically": true
 }
