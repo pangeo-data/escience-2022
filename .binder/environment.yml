@@ -18,6 +18,8 @@ dependencies:
   - hvplot
   - geopandas
   - pooch
+  - dask
+  - fsspec
   - s3fs
   - pip
   - pip:
