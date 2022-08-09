@@ -16,6 +16,8 @@ dependencies:
   - cartopy
   - holoviews
   - hvplot
+  - geoviews
+  - cartopy
   - geopandas
   - pooch
   - dask
