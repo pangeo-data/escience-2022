@@ -29,3 +29,5 @@ dependencies:
     - wget
     - sphinx-exercise
     - kerchunk==0.0.7
+    - jupytext
+    - nbgitpuller
