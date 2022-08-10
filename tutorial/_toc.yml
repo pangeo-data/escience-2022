@@ -20,7 +20,7 @@ parts:
   - file: pangeo101/visualization
     title: Interactive plotting with holoviews
   - file: pangeo101/data_discovery
-    title: Data Access and discovery
+    title: Data access and discovery
   - file: pangeo101/chunking_introduction
     title: Chunking and compression
   - file: pangeo101/dask_introduction
