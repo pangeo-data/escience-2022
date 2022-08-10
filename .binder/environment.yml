@@ -23,7 +23,7 @@ dependencies:
   - dask
   - fsspec
   - s3fs
-  - graphviz
+  - ipycytoscape
   - pip
   - pip:
     - wget
