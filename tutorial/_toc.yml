@@ -29,9 +29,6 @@ parts:
 - caption: Notebooks
   chapters:
   - file: notebooks/use-cases
-    sections:
-    - file: notebooks/wildfires
-      title: Burn severity maps
 
 - caption: Beyond the workshop
   chapters:
