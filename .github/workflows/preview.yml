@@ -1,0 +1,32 @@
+name: preview
+
+on:
+  # Trigger the workflow only on pull request to preview the book
+  pull_request:
+
+# This job installs dependencies, build the jupyter notebook, and pushes it to `render`, a new `branch`
+jobs:
+  build:
+    name: Setup
+    runs-on: "ubuntu-latest"
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up conda and dependencies
+        uses: conda-incubator/setup-miniconda@v2.1.1
+        with:
+          activate-environment: foss4g
+          environment-file: .binder/environment.yml
+          python-version: "3.10"
+          channels: conda-forge
+      # Build the book
+      - name: Build the book
+        run: |
+          jupyter-book build tutorial
+      # Upload artifact for preview
+      - uses: actions/upload-artifact@v3
+        with:
+          name: jupyterbook-html
+          path: tutorial/_build/html
