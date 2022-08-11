@@ -29,7 +29,7 @@ Once your enrollment to Pangeo VO is validated, just log out from EGI Check-in t
 Before the start of the course, you need to register to the Pangeo EGI-ACE EOSC infrastructure.
 :::
 
-Then, you just need to click on [this link](https://pangeo-xxlarge.vm.fedcloud.eu/jupyterhub/hub/user-redirect/git-pull?repo=https%3A//github.com/pangeo-data/foss4g-2022&urlpath=lab/tree/foss4g-2022/tutorial/pangeo101/&branch=main) to open a Jupyterlab on the correct folder for the tutorial.
+Then, you just need to click on [this link](https://pangeo-foss4g.vm.fedcloud.eu/jupyterhub/hub/user-redirect/git-pull?repo=https%3A//github.com/pangeo-data/foss4g-2022&urlpath=lab/tree/foss4g-2022/tutorial/pangeo101/&branch=main) to open a Jupyterlab on the correct folder for the tutorial.
 
 Under the hood, this will clone the https://github.com/pangeo-data/foss4g-2022 repository and put you in the correct folder for executing our tutorial.
 
@@ -39,7 +39,7 @@ Alternatively, you can also open notebooks one by one from the PANGEO 101 sectio
 
 :::{note}
 After the FOSS4G workshop, you can continue to use the resources, but note that we would probably modify the service and things might not work from time to time. 
-We would appreciate you get in touch with us to give us some feedback and be informed of the platform evolution.
+We would appreciate you get in touch with us to give us some feedback and be informed of the platform evolution. You can do this through [Github Discussions](https://github.com/pangeo-data/foss4g-2022/discussions).
 
 You can also contribtue to "the Pangeo show and tell" online meetups.
 :::
@@ -50,21 +50,14 @@ You can also contribtue to "the Pangeo show and tell" online meetups.
 Most part of this tutorial has been designed to run on limited computer resources, so it's fine to run it on your laptop.
 It's a bit more complicated as you'll have to install the software environment yourself. You also wont'be able to test real Cloud distributed processing with Dask gateway.
 
-Steps to run this tutorial on your own computer are listed below and demonstrated through Linux commands:
+Steps to run this tutorial on your own computer are listed below and demonstrated _through Linux commands only_:
 
 1. git clone the foss4g-2022 repository.
 ```bash
 git clone https://github.com/pangeo-data/foss4g-2022.git
 ```
-2. Install the required software environment with Miniconda. If you don't have conda, install it by following these instructions (see [here](https://docs.conda.io/en/latest/miniconda.html)). This can take a few minutes.
+2. Install the required software environment with Conda. If you don't have Conda, install it by following these instructions (see [here](https://docs.conda.io/en/latest/miniconda.html)). Then create the environment, this can take a few minutes.
 ```bash
-# If you don't already have Miniconda or Anaconda
-curl -o miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash miniconda.sh -f -b -p /opt/anaconda
-/opt/anaconda/bin/conda clean -tipy
-rm -f miniconda.sh
-
-# Create a conda environment
 conda env create -n pangeo-foss4g -f foss4g-2022/.binder/environment.yml
 ```
 3. Launch a Jupyterlab notebook server from this environment.
