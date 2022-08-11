@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 /NOTEBOOKS/Introduction/data/
 /NOTEBOOKS/Introduction/sandbox/
+tutorial/pangeo101/*.nc
