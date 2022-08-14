@@ -18,7 +18,7 @@ The content of this repository (folder `tutorial`) is rendered as an online docu
 
 ## FOSS4G Pangeo 101 workshop
 
-An [introduction to the Pangeo ecosystem](https://talks.osgeo.org/foss4g-2022-workshops/talk/NF8BKU/) will be provided at FOSS4G 2022 by the Pangeo Community. You will learn how to efficiently access, analyze and visualize geospatial data at scale. The workshop timeline, setup and content of the workshop are accessible via the left menu of [this webpage](https://pangeo-data.github.io/foss4g-2022).
+An in-person workshop to [introduce the Pangeo ecosystem](https://talks.osgeo.org/foss4g-2022-workshops/talk/NF8BKU/) will be provided at FOSS4G 2022 by the Pangeo Community on **Tuesday 23rd August 2022** from **14:00** to **18:00 CEST**. You will learn how to efficiently access, analyze and visualize geospatial data at scale. The workshop timeline, setup and content of the workshop are accessible via the left menu of [this webpage](https://pangeo-data.github.io/foss4g-2022/before/setup.html).
 
 ## Contributors ✨
 
