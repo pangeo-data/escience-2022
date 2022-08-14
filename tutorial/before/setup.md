@@ -6,12 +6,11 @@ This is why we put in place such a platform on top of EOSC federation thanks to 
 We recommend then running this tutorial using the EOSC/CESNET infrastructure, which is mainly a Dask-gateway enabled Jupyterhub offering some pre-cooked software environment. 
 For more details on this deployment, you may want to take a look at [Daskhub helm chart](https://github.com/dask/helm-chart/tree/main/daskhub).
 
-This pages will describe three ways of running the tutorial:
+This page will describe three ways of running the tutorial:
 
 - Through the provided Pangeo platform deployed on EOSC resources (recommended)
 - Locally on your personal computer
 - Using various Binderhubs solutions
-
 
 ## Running the tutorial on the provided Pangeo platform
 
@@ -41,14 +40,14 @@ Alternatively, you can also open notebooks one by one from the PANGEO 101 sectio
 After the FOSS4G workshop, you can continue to use the resources, but note that we would probably modify the service and things might not work from time to time. 
 We would appreciate you get in touch with us to give us some feedback and be informed of the platform evolution. You can do this through [Github Discussions](https://github.com/pangeo-data/foss4g-2022/discussions).
 
-You can also contribtue to "the Pangeo show and tell" online meetups.
+You can also contribute to "the Pangeo show and tell" online meetups.
 :::
 
 
 ## Running on your own computer
 
 Most parts of this tutorial were designed to run with limited computer resources, so it is possible to run on your laptop.
-It is a bit more complicated as you will have to install the software environment yourself. Also ypu will not be able to test real cloud distributed processing with Dask gateway.
+It is a bit more complicated as you will have to install the software environment yourself. Also you will not be able to test real cloud distributed processing with Dask gateway.
 
 Steps to run this tutorial on your own computer are listed below and demonstrated _through Linux commands only_:
 
@@ -68,16 +67,15 @@ jupyter lab
 4. Open a web browser and connect to the Jupyterlab provided URL (you should see it in the jupyter lab command outputs), something like: http://localhost:8888/lab?token=42fac6733c6854578b981bca3abf5152.
 5. Navigate to foss4g-2022/tutorial/pangeo101/ using the file browser on the left side of the Jupyterlab screen.
 
-
 ## Running using a Binderhub deployment
 
 [Binderhub](https://binderhub.readthedocs.io/en/latest/) is a cloud service that allows users to share reproducible interactive computing environments from code repositories. It is generally used to enable other users to easily run your own code through Jupyter notebooks. 
 It is a really cool service offered for free by several organisations (MyBinder through Jupyter, GESIS, etc.).
 
 It is probably the easiest way to execute notebooks in this repository, as you only have to do one click to arrive in a Jupyterlab with all the necessary libraries.
-However, the hardware resources you will be allowed to use are quite small, so you will not be able to grasp the full potential of the Pangeo software stack, and parts of the notebooks will be unavailable.
+However, the hardware resources of the public BinderHub are quite small, so you will not be able to grasp the full potential of the Pangeo software stack, and parts of the notebooks will be unavailable.
 
-All the notebooks on the PANGEO 101 section, for example ["Handling multi-dimensional arrays with xarray"](../pangeo101/xarray_introduction.ipynb) have a rocket icon at the top, from which you can select the Binder button to just run this notebook on the [GESIS Binder service](https://notebooks.gesis.org/binder/).
+All the notebooks on the PANGEO 101 section, for example ["Handling multi-dimensional arrays with xarray"](../pangeo101/xarray_introduction.ipynb) have a rocket icon 🚀 at the top, from which you can select the Binder button to just run this notebook on the [GESIS Binder service](https://notebooks.gesis.org/binder/).
 
 Alternatively, you can also directly click on the below buttons:
 
