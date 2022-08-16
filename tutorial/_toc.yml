@@ -26,10 +26,6 @@ parts:
   - file: pangeo101/dask_introduction
     title: Parallel computing with dask
 
-- caption: Notebooks
-  chapters:
-  - file: notebooks/use-cases
-
 - caption: Beyond the workshop
   chapters:
   - file: afterword/resources
