@@ -19,6 +19,7 @@ execute:
 
 # Add a launch button on a specific binder instance
 launch_buttons:
+  notebook_interface: "jupyterlab"
   binderhub_url: "https://notebooks.gesis.org/binder/"  # The URL for your BinderHub (e.g., https://mybinder.org)
   jupyterhub_url: "https://pangeo-foss4g.vm.fedcloud.eu/jupyterhub/"  # The URL for your JupyterHub. (e.g., https://datahub.berkeley.edu)
 
