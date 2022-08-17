@@ -22,7 +22,7 @@ parts:
   - file: pangeo101/data_discovery
     title: Data access and discovery
   - file: pangeo101/chunking_introduction
-    title: Chunking and compression
+    title: Chunking
   - file: pangeo101/dask_introduction
     title: Parallel computing with dask
 
