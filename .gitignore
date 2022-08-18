@@ -130,3 +130,4 @@ dmypy.json
 /NOTEBOOKS/Introduction/data/
 /NOTEBOOKS/Introduction/sandbox/
 tutorial/pangeo101/*.nc
+tutorial/pangeo101/test.zarr/
