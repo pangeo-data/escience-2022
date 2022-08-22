@@ -5,13 +5,13 @@
 
 ### Join the community!
 
-| Information | Links |
-| :--- | :--- |
-| **Website** | https://pangeo.io/  |
-| **GitHub** | [![GitHub](https://img.shields.io/badge/GitHub-Pangeo--data-blue?logo=github)](https://github.com/pangeo-data)  |
-| **Examples** | [![Gallery](https://img.shields.io/badge/Pangeo-Gallery-orange)](http://gallery.pangeo.io/)  |
+| Information | Links                                                                                                                                                                                                                                                                                    |
+| :--- |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Website** | https://pangeo.io/                                                                                                                                                                                                                                                                       |
+| **GitHub** | [![GitHub](https://img.shields.io/badge/GitHub-Pangeo--data-blue?logo=github)](https://github.com/pangeo-data)                                                                                                                                                                           |
+| **Examples** | [![Gallery](https://img.shields.io/badge/Pangeo-Gallery-orange)](http://gallery.pangeo.io/)                                                                                                                                                                                              |
 | **Chat** | [![Gitter](https://img.shields.io/badge/Gitter-Chat-yellow?logo=gitter)](https://gitter.im/pangeo-data/Lobby)  [![Pangeo - Discourse](https://img.shields.io/discourse/users?server=https%3A%2F%2Fdiscourse.pangeo.io%2F&style=flat-square&logo=discourse)](https://discourse.pangeo.io) |
-| **News** | [![Fllo](https://img.shields.io/twitter/follow/pangeo_data?style=social)](https://twitter.com/pangeo_data)  |
+| **News** | [![Medium - Blog](https://img.shields.io/badge/Medium-Blog-2ea44f?logo=medium)](https://medium.com/pangeo) [![Fllo](https://img.shields.io/twitter/follow/pangeo_data?style=social)](https://twitter.com/pangeo_data)                                                                    |
 
 ### Meetings
 - [General](https://pangeo.io/meeting-notes.html#community-meeting): Pangeo holds community meetings meetings every Wednesday. The meetings alternate between 12PM and 4PM US Eastern Time to encourage participants from a wider range of time zones. 
