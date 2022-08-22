@@ -1,7 +1,7 @@
 # Project Pythia
 
 :::{tip}
-Project Pythia is the education working group for Pangeo and is an educational resource for the entire geoscience community. 
+Project Pythia, https://projectpythia.org/, is the education working group for Pangeo and is an educational resource for the entire geoscience community. 
 The information below highlights some notions of the initiative. We also include a recent presentation authored by Clyne et al. (2022). 
 
 For further details, we suggest visiting Pythia's [About section](https://projectpythia.org/about.html#presentations-about-project-pythia). 
