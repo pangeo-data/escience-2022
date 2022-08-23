@@ -25,6 +25,7 @@ dependencies:
   - fsspec
   - s3fs
   - ipycytoscape
+  - datashader
   - pip
   - pip:
     - wget
