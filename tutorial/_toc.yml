@@ -4,10 +4,6 @@
 format: jb-book
 root: intro
 parts:
-- caption: About
-  chapters:
-  - file: about/timeline
-    title: Workshop timeline
 
 - caption: Before the workshop
   chapters:

@@ -1,4 +1,4 @@
-name: foss4g
+name: clivar
 channels:
   - conda-forge
   - defaults

@@ -1,11 +1,11 @@
 # LICENSE
 
-The FOSS4G 2022 Pangeo Workshop makes all of their materials publicly available under open source licenses.
+The CLIVAR 2022 Pangeo Workshop makes all of their materials publicly available under open source licenses.
 
 The process documents and data are made available under a CC-BY license.
 Software are made available under an MIT license.
 
-The  license text listed below (describing both CC-BY and MIT licenses as well as their usage in the FOSS4G 2022 Pangeo Workshop) is re-used under a CC-BY license from The Turing Way (see [LICENSE.md](https://github.com/alan-turing-institute/the-turing-way/edit/main/LICENSE.md)) and The Carpentries community materials (see the [Reproducible Science Curriculum](https://github.com/Reproducible-Science-Curriculum/sharing-RR-Jupyter/blob/gh-pages/LICENSE.md)).
+The  license text listed below (describing both CC-BY and MIT licenses as well as their usage in the CLIVAR 2022 Pangeo Bootcamp) is re-used under a CC-BY license from The Turing Way (see [LICENSE.md](https://github.com/alan-turing-institute/the-turing-way/edit/main/LICENSE.md)) and The Carpentries community materials (see the [Reproducible Science Curriculum](https://github.com/Reproducible-Science-Curriculum/sharing-RR-Jupyter/blob/gh-pages/LICENSE.md)).
 
 ## Process documents and data
 
@@ -23,7 +23,7 @@ The licensor cannot revoke these freedoms as long as you follow the license term
 
 Under the following terms:
 
-* **Attribution**---You must give appropriate credit (mentioning that your work is derived from work that is Copyright (c) 2022 Pangeo and, where practical, linking to https://github.com/pangeo-data/foss4g-2022), provide a [link to the license][cc-by-human], and indicate if changes were made.
+* **Attribution**---You must give appropriate credit (mentioning that your work is derived from work that is Copyright (c) 2022 Pangeo and, where practical, linking to https://github.com/pangeo-data/clivar-2022), provide a [link to the license][cc-by-human], and indicate if changes were made.
   You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
 * **No additional restrictions**---You may not apply legal terms or technological measures that legally restrict others from doing
 anything the license permits.
@@ -37,7 +37,7 @@ With the understanding that:
 
 ## Software
 
-Except where otherwise noted, the infrastructure, the example programs, code snippets and other software provided by the FOSS4G 2022 Pangeo Workshop are made available under the [OSI][osi]-approved [MIT license][mit-license].
+Except where otherwise noted, the infrastructure, the example programs, code snippets and other software provided by the CLIVAR 2022 Pangeo CMIP6 are made available under the [OSI][osi]-approved [MIT license][mit-license].
 
 > Permission is hereby granted, free of charge, to any person obtaining
 > a copy of this software and associated documentation files (the

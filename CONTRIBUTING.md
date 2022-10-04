@@ -25,8 +25,8 @@ and "help wanted" is open to whoever wants to implement it.
 
 ## Write Documentation
 
-Pangeo Tutorial at FOSS4G 2022 could always use more documentation, whether as part of the
-official Pangeo Tutorial at FOSS4G 2022 docs, in docstrings, or even on the web in blog posts,
+Pangeo Tutorial at CLIVAR CMIP6 Bootcamp 2022 could always use more documentation, whether as part of the
+official Pangeo Tutorial at CLIVAR CMIP6 Bootcamp 2022 docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 ## Submit Feedback
@@ -42,7 +42,7 @@ If you are proposing a feature:
 
 ## Get Started
 
-Ready to contribute? Here's how to set up `Pangeo Tutorial at FOSS4G 2022` for local development.
+Ready to contribute? Here's how to set up `Pangeo Tutorial at `CLIVAR 2022` for local development.
 
 1. Fork the repo on GitHub.
 2. Clone your fork locally.
@@ -53,4 +53,4 @@ Ready to contribute? Here's how to set up `Pangeo Tutorial at FOSS4G 2022` for l
 
 ## Code of Conduct
 
-Please note that the Pangeo Tutorial at FOSS4G 2022 project is released with a [Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
+Please note that the Pangeo Tutorial at CLIVAR 2022 project is released with a [Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.

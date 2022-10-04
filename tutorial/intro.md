@@ -5,15 +5,11 @@ The computing and storage resources used for this workshop have been kindly prov
 :::
 
 
-## FOSS4G Annual International Gathering
+## Arctic Processes in CMIP6 bootcamp
 
-[FOSS4G](https://foss4g.org/) stands for **Free and Open Source Software for Geospatial** and is the annual recurring global event hosted by [OSGeo](https://www.osgeo.org/), the non-profit organization that supports and promotes the collaborative development of free and open source geographic technologies and open geospatial data. 
+The Arctic Processes in CMIP6 bootcamp is taking place from 11 to 21 October 2022 at Søminestationen (Denmark). It is organized by CLIVAR [CLIVAR/CliC Northern Oceans Region Panel](https://www.clivar.org/clivar-panels/northern).
 
-### FOSS4G Pangeo 101 workshop
-
-An [introduction to the Pangeo ecosystem](https://talks.osgeo.org/foss4g-2022-workshops/talk/NF8BKU/) will be provided by the Pangeo Community. 
-You will learn how to efficiently access, analyze and visualize geospatial data at scale. 
-The workshop timeline, setup and content are accessible via the left menu of this webpage.
+See more information at [Arctic Processes in CMIP6 bootcamp](https://www.clivar.org/events/arctic-processes-cmip6-bootcamp).
 
 ## The European Open Science Cloud (EOSC)
 
