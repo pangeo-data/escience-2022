@@ -14,6 +14,9 @@ dependencies:
   - cftime
   - netcdf4
   - h5netcdf
+  - intake
+  - intake-esm
+  - gcsfs
   - cartopy
   - holoviews
   - hvplot
