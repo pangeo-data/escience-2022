@@ -15,12 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up conda and dependencies
-        uses: conda-incubator/setup-miniconda@v2.1.1
+        uses: mamba-org/provision-with-micromamba@v13
         with:
-          activate-environment: clivar
           environment-file: .binder/environment.yml
-          python-version: "3.10"
+          environment-name: clivar
+          extra-specs: |
+            python=3.10
           channels: conda-forge
+          cache-env: true
       # Build the book
       - name: Build the book
         run: |
