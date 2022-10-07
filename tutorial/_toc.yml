@@ -26,6 +26,7 @@ parts:
   chapters:
   - file: examples/examples
     title: How to 
+  - glob: examples/notebooks/*
 
 - caption: Beyond the workshop
   chapters:
