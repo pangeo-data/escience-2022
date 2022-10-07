@@ -1,3 +1,4 @@
+name: clivar
 channels:
   - conda-forge
   - defaults
