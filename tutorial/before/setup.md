@@ -6,31 +6,34 @@ This is why we put in place such a platform on top of EOSC federation thanks to 
 We recommend running this tutorial using the EOSC/CESNET infrastructure, which is mainly a Dask-gateway enabled Jupyterhub offering some pre-cooked software environment. 
 For more details on this deployment, you may want to take a look at [Daskhub helm chart](https://github.com/dask/helm-chart/tree/main/daskhub).
 
-This page will describe three ways of running the tutorial:
+This page will describe two ways of running the tutorial:
 
 - Through EOSC resources (recommended)
 - Locally on your personal computer
-- Using other available Binderhubs solutions
 
 ## Running the tutorial on the European Open Science Cloud (EOSC) 
 
-First, before the CLIVAR CMIP6 Bootcamp, all the participants will have to create an EGI account and enroll to the the Virtual Organisations to have access to EOSC Pangeo JupyterHub and/or EOSC EGI BinderHub.
-There are several steps to follow:
+First, before the CLIVAR CMIP6 Bootcamp, all the participants will have to create an EGI account and enroll to the Virtual Organisations to have access to EOSC Pangeo JupyterHub and EOSC Pangeo storage.
 
-1. Sign up for an EGI account:  [https://aai.egi.eu/signup](https://aai.egi.eu/signup). Use your [ORCID](https://orcid.org/) account to authenticate or social media account e.g. [GitHub](https://github.com/).
-2. Enroll to the **vo.notebooks.egi.eu** VO by clicking on [https://aai.egi.eu/registry/co_petitions/start/coef:111](https://aai.egi.eu/registry/co_petitions/start/coef:111). This will take you to the website shown on the Figure ![EGI account](../figures/EGI-VO.png) and then to ![EGI join VO notebook](../figures/EGI-join-VO.png). For the latter e.g. when asking to join the EGI VO notebook,  in the "statement for purpose" simply write “**To execute Jupyter notebooks during CLIVAR CMIP6 Bootcamp**”. Review and agree on the policy and click on “Submit”. Once your enrollment has been validated you will have access to [https://binder.notebooks.egi.eu/](https://binder.notebooks.egi.eu/) (it requires you to authenticate using EGI Check-in credentials), a service building on BinderHub but with more compute resources than [https://mybinder.org/](https://mybinder.org/). 
-3. Similarly create another account on the **development instance** of EGI Check-In, clicking on: [https://aai-dev.egi.eu/registry/co_petitions/start/coef:2](https://aai-dev.egi.eu/registry/co_petitions/start/coef:2).
-4. **Enroll** in the “vo.pangeo.eu” Virtual Organisation by clicking on: [https://aai-dev.egi.eu/registry/co_petitions/start/coef:290](https://aai-dev.egi.eu/registry/co_petitions/start/coef:290) (use the same statement of purpose e.g. “**To execute Jupyter notebooks during CLIVAR CMIP6 Bootcamp**”).
+There are several steps to follow:
+First two steps use EGI development instance to activate your access to pangeo-eosc jupyter hub.  Last two steps are there to activate access to pangeo-eosc object storage.  
+1. sign up for an EGI account (**Development egi instance:aai-dev** ) by clicking on :  [https://aai-dev.egi.eu/registry/co_petitions/start/coef:2](https://aai-dev.egi.eu/registry/co_petitions/start/coef:2).  Use your [ORCID](https://orcid.org/) account to authenticate or social media account e.g. [GitHub](https://github.com/).
+2. **Enroll in the development instance** in the “vo.pangeo.eu” Virtual Organisation by clicking on: [https://aai-dev.egi.eu/registry/co_petitions/start/coef:290](https://aai-dev.egi.eu/registry/co_petitions/start/coef:290). 
+This will take you to the website shown on the Figure ![EGI account](../figures/EGI-VO.png) and then to ![EGI join VO notebook](../figures/EGI-join-VO.png).  For the latter e.g. when asking to join the EGI VO pangeo,  in the "statement for purpose" simply write “**To execute Jupyter notebooks during CLIVAR CMIP6 Bootcamp as student (or mentor)**”. Review and agree on the policy and click on “Submit”. 
+
+3.  sign up for an EGI account (**Production EGI instance:aai**) by clicking on :  [https://aai.egi.eu/registry/co_petitions/start/coef:2](https://aai.egi.eu/registry/co_petitions/start/coef:2).  Use your [ORCID](https://orcid.org/) account to authenticate or social media account e.g. [GitHub](https://github.com/).
+4.  Enroll to the **vo.pangeo.egi.eu** VO by clicking on [https://aai.egi.eu/registry/co_petitions/start/coef:386](https://aai.egi.eu/registry/co_petitions/start/coef:111). This will take you to the website shown on the Figure ![EGI account](../figures/EGI-VO.png) and then to ![EGI join VO notebook](../figures/EGI-join-VO.png). For the latter e.g. when asking to join the EGI VO notebook,  in the "statement for purpose" simply write “**To execute Jupyter notebooks during CLIVAR CMIP6 Bootcamp as student (or mentor)**”. Review and agree on the policy and click on “Submit”. 
+
 
 
 :::{note}
-It is **important** to perform all these steps **as early as possible** in order for managers of the Virtual Organisations to approve your petitions to join (which may **take several days**).
+It is **important** to perform all these steps **as early as possible** in order for managers of the Virtual Organisations to approve your petitions to join.
 :::
 
 Once your enrollments have been validated, you may need to log out from EGI Check-in to refresh your account. If you have any trouble, request help by [filling an issue](https://github.com/pangeo-data/clivar-2022/issues/new) before the bootcamp. Someone will assist you with the setup.
 
 
-To access the Pangeo EOSC JupyterHub, you need to click on [this link](https://pangeo-elastic.vm.fedcloud.eu/jupyterhub/hub/user-redirect/git-pull?repo=https%3A//github.com/pangeo-data/clivar-2022&urlpath=lab/tree/clivar-2022/tutorial/pangeo101/&branch=main) to open a Jupyterlab on the correct folder for the tutorial.
+To access the Pangeo EOSC JupyterHub, you need to click on [this link](https://pangeo-clivar.vm.fedcloud.eu/jupyterhub/hub/user-redirect/git-pull?repo=https%3A//github.com/pangeo-data/clivar-2022&urlpath=lab/tree/clivar-2022/tutorial/pangeo101/&branch=main) to open a Jupyterlab on the correct folder for the tutorial.
 
 Under the hood, this will clone the https://github.com/pangeo-data/clivar-2022 repository and put you in the correct folder for executing our tutorial.
 
@@ -90,3 +93,4 @@ MyBinder:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pangeo-data/clivar-2022/HEAD)
 
 You will then have to navigate to the clivar-2022/tutorial/pangeo101/ folder using the file browser on the left side of the Jupyterlab screen.
+
