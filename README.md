@@ -3,7 +3,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-This repository contains the documentation and jupyter notebooks used for delivering [the tutorial on Pangeo](https://talks.osgeo.org/clivar-2022-workshops/talk/NF8BKU/) during the [CLIVAR CMIP6 Bootcamp 2022](https://www.clivar.org/events/arctic-processes-cmip6-bootcamp).
+This repository contains the documentation and jupyter notebooks used for delivering the tutorial on Pangeo during the [CLIVAR CMIP6 Bootcamp 2022](https://www.clivar.org/events/arctic-processes-cmip6-bootcamp).
 
 <img src="tutorial/figures/pangeo_logo.png" width="180" align="Left" /></a>
 <img src="tutorial/figures/EGI-ACE_logo.png" width="180" align="Right" /></a>
