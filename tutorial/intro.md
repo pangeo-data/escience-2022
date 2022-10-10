@@ -31,6 +31,8 @@ EOSC is run as a [co-programmed European Partnership under Horizon Europe from 2
 
 [Pangeo](https://pangeo.io/) is a worldwide community for Big Data geoscience promoting open, reproducible, and scalable science. 
 
+A short introduction to Pangeo can be found [here](https://docs.google.com/presentation/d/1XB9jmKlPnyAtUWRG_xzGC9h3qn_88gVSegOI3uDcaKo/edit?usp=sharing).
+
 [Pangeo Europe](https://pangeo.io/meeting-notes.html) aims at highlighting European contributions to the Pangeo Community and at providing a reference deployment for Pangeo on EOSC. 
 The Pangeo deployment on EOSC has been made possible thanks to the [EGI-ACE](https://www.egi.eu/project/egi-ace/) project through their [Open Call](https://www.egi.eu/egi-ace-open-call/).
 
