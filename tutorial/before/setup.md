@@ -13,15 +13,15 @@ This page will describe two ways of running the tutorial:
 
 ## Running the tutorial on the European Open Science Cloud (EOSC) 
 
-First, before the CLIVAR CMIP6 Bootcamp, all the participants will have to create an EGI account and enroll to the the Virtual Organisations to have access to EOSC Pangeo JupyterHub and/or EOSC EGI BinderHub.
+First, before the CLIVAR CMIP6 Bootcamp, all the participants will have to create an EGI account and enroll to the Virtual Organisations to have access to EOSC Pangeo JupyterHub and EOSC Pangeo storage.
+
 There are several steps to follow:
 First two steps use EGI development instance to activate your access to pangeo-eosc jupyter hub.  Last two steps are there to activate access to pangeo-eosc object storage.  
-1. signe up for an EGI account (**Development egi instance:aai-dev** ) by clicking on :  [https://aai-dev.egi.eu/registry/co_petitions/start/coef:2](https://aai-dev.egi.eu/registry/co_petitions/start/coef:2).  Use your [ORCID](https://orcid.org/) account to authenticate or social media account e.g. [GitHub](https://github.com/).
-2. **Enroll in the development instace** in the “vo.pangeo.eu” Virtual Organisation by clicking on: [https://aai-dev.egi.eu/registry/co_petitions/start/coef:290](https://aai-dev.egi.eu/registry/co_petitions/start/coef:290). 
+1. sign up for an EGI account (**Development egi instance:aai-dev** ) by clicking on :  [https://aai-dev.egi.eu/registry/co_petitions/start/coef:2](https://aai-dev.egi.eu/registry/co_petitions/start/coef:2).  Use your [ORCID](https://orcid.org/) account to authenticate or social media account e.g. [GitHub](https://github.com/).
+2. **Enroll in the development instance** in the “vo.pangeo.eu” Virtual Organisation by clicking on: [https://aai-dev.egi.eu/registry/co_petitions/start/coef:290](https://aai-dev.egi.eu/registry/co_petitions/start/coef:290). 
 This will take you to the website shown on the Figure ![EGI account](../figures/EGI-VO.png) and then to ![EGI join VO notebook](../figures/EGI-join-VO.png).  For the latter e.g. when asking to join the EGI VO pangeo,  in the "statement for purpose" simply write “**To execute Jupyter notebooks during CLIVAR CMIP6 Bootcamp as student (or mentor)**”. Review and agree on the policy and click on “Submit”. 
 
-
-3.  signe up for an EGI account (**Oroduction EGI instance:aai**) by clicking on :  [https://aai.egi.eu/registry/co_petitions/start/coef:2](https://aai.egi.eu/registry/co_petitions/start/coef:2).  Use your [ORCID](https://orcid.org/) account to authenticate or social media account e.g. [GitHub](https://github.com/).
+3.  sign up for an EGI account (**Production EGI instance:aai**) by clicking on :  [https://aai.egi.eu/registry/co_petitions/start/coef:2](https://aai.egi.eu/registry/co_petitions/start/coef:2).  Use your [ORCID](https://orcid.org/) account to authenticate or social media account e.g. [GitHub](https://github.com/).
 4.  Enroll to the **vo.pangeo.egi.eu** VO by clicking on [https://aai.egi.eu/registry/co_petitions/start/coef:386](https://aai.egi.eu/registry/co_petitions/start/coef:111). This will take you to the website shown on the Figure ![EGI account](../figures/EGI-VO.png) and then to ![EGI join VO notebook](../figures/EGI-join-VO.png). For the latter e.g. when asking to join the EGI VO notebook,  in the "statement for purpose" simply write “**To execute Jupyter notebooks during CLIVAR CMIP6 Bootcamp as student (or mentor)**”. Review and agree on the policy and click on “Submit”. 
 
 
