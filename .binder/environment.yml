@@ -30,6 +30,7 @@ dependencies:
   - ipycytoscape
   - datashader
   - kerchunk=0.0.7
+  - nc-time-axis
   - pip
   - pip:
     - wget
