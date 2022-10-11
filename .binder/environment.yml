@@ -29,10 +29,10 @@ dependencies:
   - s3fs
   - ipycytoscape
   - datashader
+  - kerchunk=0.0.7
   - pip
   - pip:
     - wget
     - sphinx-exercise
-    - kerchunk==0.0.7
     - jupytext
     - nbgitpuller
