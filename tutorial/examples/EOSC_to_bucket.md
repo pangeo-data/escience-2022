@@ -15,8 +15,9 @@ Then create an openstack environment using mamba.
 
 ```
 mamba create -n openstack  python jq s3fs gcc awscli --yes  -c conda-forge
-mamba deactivate
-mamba activate openstack
+conda deactivate
+conda activate openstack
+pip install fedcloudclient
 ```
 
 ## Connect your environment with EGI Check-In
@@ -27,9 +28,14 @@ It is a very long string, but do not worry, copy and past it instead of `<your_t
 
 
 ```
-export OIDC_ACCESS_TOKEN=<your_token>
+export OIDC_ACCESS_TOKEN=`<your_token>`
 ```
 
+Now plz check if your fedcloud token works with following command
+
+```
+fedcloud token check
+```
 
 Next, copy and paste following command to access pangeo object storage.  
 ```
@@ -118,10 +124,10 @@ Now, you just need to choose which _bucket_ or object _container_ you'll use
 
 Here is how you can list your available buckets on pangeo-eosc object storage. 
 
-In this example, we chose `your-github-name` as destination bucket, pushing the `tar/` local folder to this bucket.
+In this example, we chose `your-workgroup-name` as destination bucket, pushing the `tar/` local folder to this bucket.
 
 ```
-aws s3 sync tar/ s3://your-github-name/ --endpoint-url https://object-store.cloud.muni.cz
+aws s3 sync tar/ s3://your-workgroup-name/ --endpoint-url https://object-store.cloud.muni.cz
 ```
 
 
