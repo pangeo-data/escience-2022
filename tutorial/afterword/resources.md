@@ -24,6 +24,7 @@
 
 ### Data life cycle
 - [Pangeo Forge](https://pangeo-forge.org/):  a tool designed to aid the extraction, transformation, and loading of datasets.
+- [Pangeo / ESGF Cloud Data Working Group](https://pangeo-data.github.io/pangeo-cmip6-cloud/): Lots of information on CMPI6 related datas are here.
 
 ### Most recent trainings (2021/22)
 - [Galaxy training in climate data](https://training.galaxyproject.org/training-material/topics/climate/): contains two modules introducing Pangeo, _Pangeo ecosystem 101 for everyone_ and _Pangeo Notebook in Galaxy - Introduction to Xarray_ showcasing how the Pangeo stack assists processing and analysing big climate datasets.
