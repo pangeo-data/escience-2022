@@ -48,3 +48,5 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+**This work used advanced computing resources from the CESNET resource centre of the EGI federation. The services are co-funded by the EGI-ACE project (https://www.egi.eu/project/egi-ace/, grant number 101017567).**
