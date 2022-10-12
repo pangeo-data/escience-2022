@@ -1,7 +1,7 @@
 # Welcome 👋
 
 :::{tip}
-The computing and storage resources used for this workshop have been kindly provided by [CESNET](https://www.cesnet.cz/?lang=en) in the frame of the [EGI-ACE](https://www.egi.eu/project/egi-ace/) project that provides advanced Computing for [EOSC](https://eosc-portal.eu/about/eosc).
+This work used advanced computing resources from the [CESNET](https://www.cesnet.cz/?lang=en) resource centre of the [EGI federation](https://www.egi.eu/egi-federation/). The services are co-funded by the [EGI-ACE project](https://www.egi.eu/project/egi-ace/), grant number 101017567.
 :::
 
 
