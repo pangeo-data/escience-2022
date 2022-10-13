@@ -120,14 +120,4 @@ aws configure set aws_access_key_id x1xx
 aws configure set aws_secret_access_key x2xx
 ``` 
 
-Now, you just need to choose which _bucket_ or object _container_ you'll use 
-
-Here is how you can list your available buckets on pangeo-eosc object storage. 
-
-In this example, we chose `your-workgroup-name` as destination bucket, pushing the `tar/` local folder to this bucket.
-
-```
-aws s3 sync tar/ s3://your-workgroup-name/ --endpoint-url https://object-store.cloud.muni.cz
-```
-
 
