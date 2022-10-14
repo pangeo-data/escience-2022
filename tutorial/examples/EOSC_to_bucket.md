@@ -7,6 +7,11 @@ We will need different 'token' 'key' to proceed with object storage.  Here are t
 - aws_access_key_id
 - aws_secret_access_key
 
+# Request read/write access to cloud resource 
+
+1.  sign up for an EGI account (**Production EGI instance:aai**) by clicking on :  [https://aai.egi.eu/registry/co_petitions/start/coef:2](https://aai.egi.eu/registry/co_petitions/start/coef:2).  
+2.  Enroll to the **vo.pangeo.egi.eu** VO by clicking on [https://aai.egi.eu/registry/co_petitions/start/coef:386](https://aai.egi.eu/registry/co_petitions/start/coef:386). This will take you to the website shown on the Figure ![EGI account](../figures/EGI-VO.png) and then to ![EGI join VO notebook](../figures/EGI-join-VO.png). For the latter e.g. when asking to join the EGI VO notebook,  in the "statement for purpose" simply write “**To execute Jupyter notebooks during CLIVAR CMIP6 Bootcamp as student (or mentor)**”. Review and agree on the policy and click on “Submit”. 
+3.  Before going to next step, restart your web browser.  
 
 ## Setup your command line enviroment
 
