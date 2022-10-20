@@ -14,7 +14,7 @@ The content of this repository (folder `tutorial`) is rendered as an online docu
 
 ## eScience Course 2022
 
-The eScience course is taking place 31 October to 11 November 2022 at Tjärnö Marine Laboratory (plus 28-30 November for remote presentations of final results).
+The [eScience course](https://www.aces.su.se/research/projects/escience-tools-in-climate-science-linking-observations-with-modelling/) is taking place 31 October to 11 November 2022 at [Tjärnö Marine Laboratory](https://www.gu.se/en/tjarno) (plus 28-30 November for remote presentations of final results).
 
 
 ## Contributors ✨
