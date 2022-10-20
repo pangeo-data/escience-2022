@@ -18,7 +18,7 @@ jobs:
         uses: mamba-org/provision-with-micromamba@v13
         with:
           environment-file: .binder/environment.yml
-          environment-name: clivar
+          environment-name: escience
           extra-specs: |
             python=3.10
           channels: conda-forge
