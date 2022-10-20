@@ -1,0 +1,2580 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Search and Load CMIP6 Data via ESGF / OPeNDAP &#8212; Pangeo Tutorial for the eScience Course 2022</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Some tips with xarray and pandas" href="some-xarray-pandas-presentation_Sara.html" />
+    <link rel="prev" title="Save files to EOSC (CESNET)" href="save_to_cesnet_bucket_zarr_s3fs.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/pangeo_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Pangeo Tutorial for the eScience Course 2022</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome 👋
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Before the workshop
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../before/setup.html">
+   Setup: how to run the tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Pangeo 101
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/xarray_introduction.html">
+   Handling multi-dimensional arrays with xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/visualization.html">
+   Interactive plotting with holoviews
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/data_discovery.html">
+   Data access and discovery
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/chunking_introduction.html">
+   Chunking
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/dask_introduction.html">
+   Parallel computing with dask
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Resources and Examples
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../examples.html">
+   How to
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CMIP6-ocean.html">
+   Multidimensional Coordinates example using CMIP6 Pangeo ocean model data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CMIP6_example.html">
+   Manipulation of CMIP6 model data using Pangeo catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MODIS-seaice.html">
+   MODIS Sea-ice
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MOD_AquaCHL_ADAM.html">
+   Using ADAM-API to access MODIS Aqua CHL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UERRA_ADAM.html">
+   Using ADAM-API to access UERRA regional reanalysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gridded_model_data_rolling_mean.html">
+   Rolling mean with CMIP6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="masked_and_weighted_average.html">
+   Using masks and computing weighted average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="nird-ESGF.html">
+   Using public data on NIRD using s3 and saving results in private s3 object storage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="projections.html">
+   Using cartopy and projections for plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-AERONET.html">
+   Reading AERONET data with pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-MODIS.html">
+   Reading MODIS data with xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-MODIS-SUB-XYD-xarray.html">
+   Read MODIS Terra/Aqua netcdf as xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_larger_files_to_forces_bucket.html">
+   Save files from bucket to bucket
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_netcdf.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr-without_find.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr_s3fs.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Search and Load CMIP6 Data via ESGF / OPeNDAP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="some-xarray-pandas-presentation_Sara.html">
+   Some tips with xarray and pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="xarray2pandas.html">
+   From xarray to pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="xesmf_regridding.html">
+   Regridding model data with xESMF
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Beyond the workshop
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/resources.html">
+   Join the community!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/pythia.html">
+   Project Pythia
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/envds-book.html">
+   Environmental Data Science Book
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://notebooks.gesis.org/binder/v2/gh/pangeo-data/escience-2022/main?urlpath=lab/tree/tutorial/examples/notebooks/search_and_load_with_esgf_opendap.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://pangeo-eosc.vm.fedcloud.eu/hub/user-redirect/git-pull?repo=https%3A//github.com/pangeo-data/escience-2022&urlpath=lab/tree/escience-2022/tutorial/examples/notebooks/search_and_load_with_esgf_opendap.ipynb&branch=main"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/pangeo-data/escience-2022"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/pangeo-data/escience-2022/issues/new?title=Issue%20on%20page%20%2Fexamples/notebooks/search_and_load_with_esgf_opendap.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/examples/notebooks/search_and_load_with_esgf_opendap.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#search-using-esgf-api">
+   Search using ESGF API
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-data-with-xarray">
+   Load Data with Xarray
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Search and Load CMIP6 Data via ESGF / OPeNDAP</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#search-using-esgf-api">
+   Search using ESGF API
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-data-with-xarray">
+   Load Data with Xarray
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="search-and-load-cmip6-data-via-esgf-opendap">
+<h1>Search and Load CMIP6 Data via ESGF / OPeNDAP<a class="headerlink" href="#search-and-load-cmip6-data-via-esgf-opendap" title="Permalink to this headline">#</a></h1>
+<p>This notebooks shows how to search and load data via <a class="reference external" href="https://esgf.llnl.gov/">Earth System Grid Federation</a> infrastructure. This infrastructure works great and is the foundation of the CMIP6 distribution system.</p>
+<p>The main technologies used here are the <a class="reference external" href="https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API">ESGF search API</a>, used to figure out what data we want, and <a class="reference external" href="https://www.opendap.org/">OPeNDAP</a>, a remote data access protocol over HTTP.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">cftime</span>
+<span class="kn">import</span> <span class="nn">cmaps</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+
+<span class="n">xr</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">display_style</span><span class="o">=</span><span class="s1">&#39;html&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39; 
+</pre></div>
+</div>
+</div>
+</div>
+<section id="search-using-esgf-api">
+<h2>Search using ESGF API<a class="headerlink" href="#search-using-esgf-api" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="c1"># Author: Unknown</span>
+<span class="c1"># I got the original version from a word document published by ESGF</span>
+<span class="c1"># https://docs.google.com/document/d/1pxz1Kd3JHfFp8vR2JCVBfApbsHmbUQQstifhGNdc6U0/edit?usp=sharing</span>
+
+<span class="c1"># API AT: https://github.com/ESGF/esgf.github.io/wiki/ESGF_Search_REST_API#results-pagination</span>
+
+<span class="k">def</span> <span class="nf">esgf_search</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s2">&quot;https://esgf-node.llnl.gov/esg-search/search&quot;</span><span class="p">,</span>
+                <span class="n">files_type</span><span class="o">=</span><span class="s2">&quot;OPENDAP&quot;</span><span class="p">,</span> <span class="n">local_node</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="s2">&quot;CMIP6&quot;</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;application</span><span class="si">%2F</span><span class="s2">solr%2Bjson&quot;</span><span class="p">,</span>
+                <span class="n">use_csrf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">search</span><span class="p">):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">search</span>
+    <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">project</span>
+    <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span><span class="o">=</span> <span class="s2">&quot;File&quot;</span>
+    <span class="k">if</span> <span class="n">local_node</span><span class="p">:</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;distrib&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;false&quot;</span>
+    <span class="k">if</span> <span class="n">use_csrf</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;csrftoken&#39;</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">cookies</span><span class="p">:</span>
+            <span class="c1"># Django 1.6 and up</span>
+            <span class="n">csrftoken</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">cookies</span><span class="p">[</span><span class="s1">&#39;csrftoken&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># older versions</span>
+            <span class="n">csrftoken</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">cookies</span><span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">]</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;csrfmiddlewaretoken&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">csrftoken</span>
+
+    <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">format</span>
+
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">numFound</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">all_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">files_type</span> <span class="o">=</span> <span class="n">files_type</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="n">numFound</span><span class="p">:</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">offset</span>
+        <span class="n">url_keys</span> <span class="o">=</span> <span class="p">[]</span> 
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">:</span>
+            <span class="n">url_keys</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">payload</span><span class="p">[</span><span class="n">k</span><span class="p">])]</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/?</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">url_keys</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;response&quot;</span><span class="p">]</span>
+        <span class="n">numFound</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="s2">&quot;numFound&quot;</span><span class="p">])</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s2">&quot;docs&quot;</span><span class="p">]</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]:</span>
+                <span class="n">sp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">sp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">files_type</span><span class="p">:</span>
+                    <span class="n">all_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">all_files</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">esgf_search</span><span class="p">(</span><span class="n">activity_id</span><span class="o">=</span><span class="s1">&#39;CMIP&#39;</span><span class="p">,</span> <span class="n">variable_id</span><span class="o">=</span><span class="s1">&#39;mmroa&#39;</span><span class="p">,</span>
+                  <span class="n">institution_id</span><span class="o">=</span><span class="s2">&quot;NCC&quot;</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="s1">&#39;NorESM2-LM&#39;</span><span class="p">,</span> <span class="n">experiment_id</span><span class="o">=</span><span class="s1">&#39;abrupt-4xCO2&#39;</span><span class="p">)</span>
+<span class="n">result</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=0
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=10
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=20
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=30
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=40
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=50
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=60
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=70
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=80
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=90
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=100
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=110
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=120
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=130
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=140
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=150
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=160
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=170
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=180
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=190
+https://esgf-node.llnl.gov/esg-search/search/?activity_id=CMIP&amp;variable_id=mmroa&amp;institution_id=NCC&amp;source_id=NorESM2-LM&amp;experiment_id=abrupt-4xCO2&amp;project=CMIP6&amp;type=File&amp;distrib=false&amp;format=application%2Fsolr%2Bjson&amp;offset=200
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_000101-001012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_001101-002012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_002101-003012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_003101-004012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_004101-005012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_005101-006012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_006101-007012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_007101-008012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_008101-009012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_009101-010012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_010101-011012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_011101-012012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_012101-013012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_013101-014012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_014101-015012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_015101-016012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_016101-017012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_017101-018012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_018101-019012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_019101-020012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_020101-021012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_021101-022012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_022101-023012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_023101-024012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_024101-025012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_025101-026012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_026101-027012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_027101-028012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_028101-029012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_029101-030012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_000101-001012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_001101-002012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_002101-003012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_003101-004012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_004101-005012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_005101-006012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_006101-007012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_007101-008012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_008101-009012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_009101-010012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_010101-011012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_011101-012012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_012101-013012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_013101-014012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_014101-015012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_015101-016012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_016101-017012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_017101-018012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_018101-019012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_019101-020012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_020101-021012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_021101-022012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_022101-023012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_023101-024012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_024101-025012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_025101-026012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_026101-027012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_027101-028012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_028101-029012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_029101-030012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_030101-031012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_031101-032012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_032101-033012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_033101-034012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_034101-035012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_035101-036012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_036101-037012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_037101-038012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_038101-039012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_039101-040012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_040101-041012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_041101-042012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_042101-043012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_043101-044012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_044101-045012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_045101-046012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_046101-047012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_047101-048012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_048101-049012.nc&#39;,
+ &#39;http://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_049101-050012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_000101-001012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_001101-002012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_002101-003012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_003101-004012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_004101-005012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_005101-006012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_006101-007012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_007101-008012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_008101-009012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_009101-010012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_010101-011012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_011101-012012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_012101-013012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_013101-014012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_014101-015012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_015101-016012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_016101-017012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_017101-018012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_018101-019012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_019101-020012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_020101-021012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_021101-022012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_022101-023012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_023101-024012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_024101-025012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_025101-026012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_026101-027012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_027101-028012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_028101-029012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20190815/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_029101-030012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_000101-001012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_001101-002012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_002101-003012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_003101-004012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_004101-005012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_005101-006012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_006101-007012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_007101-008012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_008101-009012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_009101-010012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_010101-011012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_011101-012012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_012101-013012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_013101-014012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_014101-015012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_015101-016012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_016101-017012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_017101-018012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_018101-019012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_019101-020012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_020101-021012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_021101-022012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_022101-023012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_023101-024012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_024101-025012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_025101-026012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_026101-027012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_027101-028012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_028101-029012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_029101-030012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_030101-031012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_031101-032012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_032101-033012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_033101-034012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_034101-035012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_035101-036012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_036101-037012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_037101-038012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_038101-039012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_039101-040012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_040101-041012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_041101-042012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_042101-043012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_043101-044012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_044101-045012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_045101-046012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_046101-047012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_047101-048012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_048101-049012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20191108/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_049101-050012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_000101-001012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_001101-002012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_002101-003012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_003101-004012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_004101-005012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_005101-006012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_006101-007012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_007101-008012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_008101-009012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_009101-010012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_010101-011012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_011101-012012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_012101-013012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_013101-014012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_014101-015012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_015101-016012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_016101-017012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_017101-018012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_018101-019012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_019101-020012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_020101-021012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_021101-022012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_022101-023012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_023101-024012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_024101-025012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_025101-026012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_026101-027012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_027101-028012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_028101-029012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_029101-030012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_030101-031012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_031101-032012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_032101-033012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_033101-034012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_034101-035012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_035101-036012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_036101-037012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_037101-038012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_038101-039012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_039101-040012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_040101-041012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_041101-042012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_042101-043012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_043101-044012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_044101-045012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_045101-046012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_046101-047012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_047101-048012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_048101-049012.nc&#39;,
+ &#39;https://esgf-data1.llnl.gov/thredds/dodsC/css03_data/CMIP6/CMIP/NCC/NorESM2-LM/abrupt-4xCO2/r1i1p1f1/AERmon/mmroa/gn/v20210118/mmroa_AERmon_NorESM2-LM_abrupt-4xCO2_r1i1p1f1_gn_049101-050012.nc&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pick one file for testing</span>
+<span class="n">files_to_open</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-data-with-xarray">
+<h2>Load Data with Xarray<a class="headerlink" href="#load-data-with-xarray" title="Permalink to this headline">#</a></h2>
+<p>These are OPeNDAP endpoints. Xarray, together with the netCDF4 python library, allow lazy loading.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">files_to_open</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s1">&#39;by_coords&#39;</span><span class="p">)</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:    (bnds: 2, lat: 96, lev: 32, lon: 144, time: 120)
+Coordinates:
+  * time       (time) object 0491-01-16 12:00:00 ... 0500-12-16 12:00:00
+  * lev        (lev) float64 0.9926 0.9763 0.9575 ... 0.01436 0.007595 0.003643
+  * lat        (lat) float64 -90.0 -88.11 -86.21 -84.32 ... 86.21 88.11 90.0
+  * lon        (lon) float64 0.0 2.5 5.0 7.5 10.0 ... 350.0 352.5 355.0 357.5
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) object dask.array&lt;chunksize=(120, 2), meta=np.ndarray&gt;
+    lev_bnds   (lev, bnds) float64 dask.array&lt;chunksize=(32, 2), meta=np.ndarray&gt;
+    p0         float64 ...
+    a          (lev) float64 dask.array&lt;chunksize=(32,), meta=np.ndarray&gt;
+    b          (lev) float64 dask.array&lt;chunksize=(32,), meta=np.ndarray&gt;
+    a_bnds     (lev, bnds) float64 dask.array&lt;chunksize=(32, 2), meta=np.ndarray&gt;
+    b_bnds     (lev, bnds) float64 dask.array&lt;chunksize=(32, 2), meta=np.ndarray&gt;
+    lat_bnds   (lat, bnds) float64 dask.array&lt;chunksize=(96, 2), meta=np.ndarray&gt;
+    lon_bnds   (lon, bnds) float64 dask.array&lt;chunksize=(144, 2), meta=np.ndarray&gt;
+    ps         (time, lat, lon) float32 dask.array&lt;chunksize=(120, 96, 144), meta=np.ndarray&gt;
+    mmroa      (time, lev, lat, lon) float32 dask.array&lt;chunksize=(120, 32, 96, 144), meta=np.ndarray&gt;
+Attributes: (12/50)
+    Conventions:                     CF-1.7 CMIP-6.2
+    activity_id:                     CMIP
+    branch_method:                   Hybrid-restart from year 1600-01-01 of p...
+    branch_time:                     0.0
+    branch_time_in_child:            0.0
+    branch_time_in_parent:           430335.0
+    ...                              ...
+    variable_id:                     mmroa
+    variant_label:                   r1i1p1f1
+    license:                         CMIP6 model data produced by NCC is lice...
+    cmor_version:                    3.5.0
+    tracking_id:                     hdl:21.14100/7e00d8c9-0c7f-40fc-911b-6f7...
+    DODS_EXTRA.Unlimited_Dimension:  time</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-16e8155b-feb9-4fad-a507-3704f2e92d9c' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-16e8155b-feb9-4fad-a507-3704f2e92d9c' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span>bnds</span>: 2</li><li><span class='xr-has-index'>lat</span>: 96</li><li><span class='xr-has-index'>lev</span>: 32</li><li><span class='xr-has-index'>lon</span>: 144</li><li><span class='xr-has-index'>time</span>: 120</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-0eacb3c3-0f10-44a7-9c82-b38e5db2024e' class='xr-section-summary-in' type='checkbox'  checked><label for='section-0eacb3c3-0f10-44a7-9c82-b38e5db2024e' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>0491-01-16 12:00:00 ... 0500-12-...</div><input id='attrs-30d88f77-9a73-4b78-89ba-ab36bdf4bbb6' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-30d88f77-9a73-4b78-89ba-ab36bdf4bbb6' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3ce9fd27-ce44-46fa-8f87-6a929781339e' class='xr-var-data-in' type='checkbox'><label for='data-3ce9fd27-ce44-46fa-8f87-6a929781339e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>time_bnds</dd><dt><span>axis :</span></dt><dd>T</dd><dt><span>long_name :</span></dt><dd>time</dd><dt><span>standard_name :</span></dt><dd>time</dd><dt><span>_ChunkSizes :</span></dt><dd>1</dd></dl></div><div class='xr-var-data'><pre>array([cftime.DatetimeNoLeap(491, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 12, 16, 12, 0, 0, 0)], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lev</span></div><div class='xr-var-dims'>(lev)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.9926 0.9763 ... 0.007595 0.003643</div><input id='attrs-f8c79124-9c67-4488-b2c7-0d8b2d353e62' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-f8c79124-9c67-4488-b2c7-0d8b2d353e62' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1daa02a0-faf3-4f9b-9701-be1ed85661b7' class='xr-var-data-in' type='checkbox'><label for='data-1daa02a0-faf3-4f9b-9701-be1ed85661b7' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>lev_bnds</dd><dt><span>units :</span></dt><dd>1</dd><dt><span>axis :</span></dt><dd>Z</dd><dt><span>positive :</span></dt><dd>down</dd><dt><span>long_name :</span></dt><dd>hybrid sigma pressure coordinate</dd><dt><span>standard_name :</span></dt><dd>atmosphere_hybrid_sigma_pressure_coordinate</dd><dt><span>formula :</span></dt><dd>p = a*p0 + b*ps</dd><dt><span>formula_terms :</span></dt><dd>p0: p0 a: a b: b ps: ps</dd></dl></div><div class='xr-var-data'><pre>array([0.992556, 0.976325, 0.957485, 0.936198, 0.912645, 0.88702 , 0.859535,
+       0.820858, 0.763404, 0.691389, 0.609779, 0.524687, 0.445993, 0.379101,
+       0.322242, 0.273911, 0.232829, 0.197908, 0.168225, 0.142994, 0.121547,
+       0.103317, 0.087821, 0.073751, 0.06152 , 0.051677, 0.043194, 0.035923,
+       0.024612, 0.014357, 0.007595, 0.003643])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lat</span></div><div class='xr-var-dims'>(lat)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-90.0 -88.11 -86.21 ... 88.11 90.0</div><input id='attrs-69f20088-f97a-42fa-bd10-59498fd583e4' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-69f20088-f97a-42fa-bd10-59498fd583e4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d44b0f60-4099-4643-93bb-9a1d1a2ca0f9' class='xr-var-data-in' type='checkbox'><label for='data-d44b0f60-4099-4643-93bb-9a1d1a2ca0f9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>lat_bnds</dd><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>Latitude</dd><dt><span>standard_name :</span></dt><dd>latitude</dd></dl></div><div class='xr-var-data'><pre>array([-90.      , -88.105263, -86.210526, -84.315789, -82.421053, -80.526316,
+       -78.631579, -76.736842, -74.842105, -72.947368, -71.052632, -69.157895,
+       -67.263158, -65.368421, -63.473684, -61.578947, -59.684211, -57.789474,
+       -55.894737, -54.      , -52.105263, -50.210526, -48.315789, -46.421053,
+       -44.526316, -42.631579, -40.736842, -38.842105, -36.947368, -35.052632,
+       -33.157895, -31.263158, -29.368421, -27.473684, -25.578947, -23.684211,
+       -21.789474, -19.894737, -18.      , -16.105263, -14.210526, -12.315789,
+       -10.421053,  -8.526316,  -6.631579,  -4.736842,  -2.842105,  -0.947368,
+         0.947368,   2.842105,   4.736842,   6.631579,   8.526316,  10.421053,
+        12.315789,  14.210526,  16.105263,  18.      ,  19.894737,  21.789474,
+        23.684211,  25.578947,  27.473684,  29.368421,  31.263158,  33.157895,
+        35.052632,  36.947368,  38.842105,  40.736842,  42.631579,  44.526316,
+        46.421053,  48.315789,  50.210526,  52.105263,  54.      ,  55.894737,
+        57.789474,  59.684211,  61.578947,  63.473684,  65.368421,  67.263158,
+        69.157895,  71.052632,  72.947368,  74.842105,  76.736842,  78.631579,
+        80.526316,  82.421053,  84.315789,  86.210526,  88.105263,  90.      ])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lon</span></div><div class='xr-var-dims'>(lon)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0 2.5 5.0 ... 352.5 355.0 357.5</div><input id='attrs-6e6eccf0-dc41-4e16-8796-f4cbd96f7454' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-6e6eccf0-dc41-4e16-8796-f4cbd96f7454' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2896add3-4642-4ea6-bfb8-259fcb003cbd' class='xr-var-data-in' type='checkbox'><label for='data-2896add3-4642-4ea6-bfb8-259fcb003cbd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>lon_bnds</dd><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>Longitude</dd><dt><span>standard_name :</span></dt><dd>longitude</dd></dl></div><div class='xr-var-data'><pre>array([  0. ,   2.5,   5. ,   7.5,  10. ,  12.5,  15. ,  17.5,  20. ,  22.5,
+        25. ,  27.5,  30. ,  32.5,  35. ,  37.5,  40. ,  42.5,  45. ,  47.5,
+        50. ,  52.5,  55. ,  57.5,  60. ,  62.5,  65. ,  67.5,  70. ,  72.5,
+        75. ,  77.5,  80. ,  82.5,  85. ,  87.5,  90. ,  92.5,  95. ,  97.5,
+       100. , 102.5, 105. , 107.5, 110. , 112.5, 115. , 117.5, 120. , 122.5,
+       125. , 127.5, 130. , 132.5, 135. , 137.5, 140. , 142.5, 145. , 147.5,
+       150. , 152.5, 155. , 157.5, 160. , 162.5, 165. , 167.5, 170. , 172.5,
+       175. , 177.5, 180. , 182.5, 185. , 187.5, 190. , 192.5, 195. , 197.5,
+       200. , 202.5, 205. , 207.5, 210. , 212.5, 215. , 217.5, 220. , 222.5,
+       225. , 227.5, 230. , 232.5, 235. , 237.5, 240. , 242.5, 245. , 247.5,
+       250. , 252.5, 255. , 257.5, 260. , 262.5, 265. , 267.5, 270. , 272.5,
+       275. , 277.5, 280. , 282.5, 285. , 287.5, 290. , 292.5, 295. , 297.5,
+       300. , 302.5, 305. , 307.5, 310. , 312.5, 315. , 317.5, 320. , 322.5,
+       325. , 327.5, 330. , 332.5, 335. , 337.5, 340. , 342.5, 345. , 347.5,
+       350. , 352.5, 355. , 357.5])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-5c22abdc-0bac-47bc-affe-d32d2c4329b0' class='xr-section-summary-in' type='checkbox'  checked><label for='section-5c22abdc-0bac-47bc-affe-d32d2c4329b0' class='xr-section-summary' >Data variables: <span>(11)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>time_bnds</span></div><div class='xr-var-dims'>(time, bnds)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(120, 2), meta=np.ndarray&gt;</div><input id='attrs-9a88c03a-06a6-4b97-ba45-9225ca0c38f7' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-9a88c03a-06a6-4b97-ba45-9225ca0c38f7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-13d3b49e-08fa-49b1-85ec-8e13a5a2b913' class='xr-var-data-in' type='checkbox'><label for='data-13d3b49e-08fa-49b1-85ec-8e13a5a2b913' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>_ChunkSizes :</span></dt><dd>[1 2]</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 1.92 kB </td> <td> 1.92 kB </td></tr>
+    <tr><th> Shape </th><td> (120, 2) </td> <td> (120, 2) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> object </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="78" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="28" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="120" x2="28" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="28" y1="0" x2="28" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 28.02293761910704,0.0 28.02293761910704,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="14.011469" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="48.022938" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,48.022938,60.000000)">120</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>lev_bnds</span></div><div class='xr-var-dims'>(lev, bnds)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(32, 2), meta=np.ndarray&gt;</div><input id='attrs-4da25fa4-be03-4d3c-90ec-42630e402b08' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4da25fa4-be03-4d3c-90ec-42630e402b08' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-832bce83-37fb-45c9-9da5-086e6b542d84' class='xr-var-data-in' type='checkbox'><label for='data-832bce83-37fb-45c9-9da5-086e6b542d84' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>formula :</span></dt><dd>p = a*p0 + b*ps</dd><dt><span>standard_name :</span></dt><dd>atmosphere_hybrid_sigma_pressure_coordinate</dd><dt><span>units :</span></dt><dd>1</dd><dt><span>formula_terms :</span></dt><dd>p0: p0 a: a_bnds b: b_bnds ps: ps</dd><dt><span>_ChunkSizes :</span></dt><dd>[32  2]</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 512 B </td> <td> 512 B </td></tr>
+    <tr><th> Shape </th><td> (32, 2) </td> <td> (32, 2) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="85" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="35" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="120" x2="35" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="35" y1="0" x2="35" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 35.85954734920875,0.0 35.85954734920875,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="17.929774" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="55.859547" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,55.859547,60.000000)">32</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>p0</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-622baaee-fb6c-4b76-bd81-7da74dbe6e75' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-622baaee-fb6c-4b76-bd81-7da74dbe6e75' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-210d6767-6d34-4b07-81fc-9d25da3b1db8' class='xr-var-data-in' type='checkbox'><label for='data-210d6767-6d34-4b07-81fc-9d25da3b1db8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>vertical coordinate formula term: reference pressure</dd><dt><span>units :</span></dt><dd>Pa</dd></dl></div><div class='xr-var-data'><pre>array(100000.)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>a</span></div><div class='xr-var-dims'>(lev)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(32,), meta=np.ndarray&gt;</div><input id='attrs-cba4dc74-2242-4856-bb38-132360220d99' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-cba4dc74-2242-4856-bb38-132360220d99' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-bb018c12-f383-40e5-bec7-2e966af7c562' class='xr-var-data-in' type='checkbox'><label for='data-bb018c12-f383-40e5-bec7-2e966af7c562' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>vertical coordinate formula term: a(k)</dd><dt><span>_ChunkSizes :</span></dt><dd>32</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 256 B </td> <td> 256 B </td></tr>
+    <tr><th> Shape </th><td> (32,) </td> <td> (32,) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="81" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="31" x2="120" y2="31" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="31" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="31" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,31.635229193102678 0.0,31.635229193102678" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="51.635229" font-size="1.0rem" font-weight="100" text-anchor="middle" >32</text>
+  <text x="140.000000" y="15.817615" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,15.817615)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>b</span></div><div class='xr-var-dims'>(lev)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(32,), meta=np.ndarray&gt;</div><input id='attrs-cb9d7910-a0ef-4120-858c-45c5e02fd135' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-cb9d7910-a0ef-4120-858c-45c5e02fd135' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0c7ceb93-dda9-4150-840c-50886fd0b16e' class='xr-var-data-in' type='checkbox'><label for='data-0c7ceb93-dda9-4150-840c-50886fd0b16e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>vertical coordinate formula term: b(k)</dd><dt><span>_ChunkSizes :</span></dt><dd>32</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 256 B </td> <td> 256 B </td></tr>
+    <tr><th> Shape </th><td> (32,) </td> <td> (32,) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="170" height="81" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="31" x2="120" y2="31" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="31" style="stroke-width:2" />
+  <line x1="120" y1="0" x2="120" y2="31" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,31.635229193102678 0.0,31.635229193102678" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="51.635229" font-size="1.0rem" font-weight="100" text-anchor="middle" >32</text>
+  <text x="140.000000" y="15.817615" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,140.000000,15.817615)">1</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>a_bnds</span></div><div class='xr-var-dims'>(lev, bnds)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(32, 2), meta=np.ndarray&gt;</div><input id='attrs-0d10a9ff-b2e2-4c63-8d63-c93847e61cbe' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-0d10a9ff-b2e2-4c63-8d63-c93847e61cbe' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1f5d31a6-a69f-45d3-bde3-563f581e3342' class='xr-var-data-in' type='checkbox'><label for='data-1f5d31a6-a69f-45d3-bde3-563f581e3342' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>vertical coordinate formula term: a(k+1/2)</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 512 B </td> <td> 512 B </td></tr>
+    <tr><th> Shape </th><td> (32, 2) </td> <td> (32, 2) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="85" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="35" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="120" x2="35" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="35" y1="0" x2="35" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 35.85954734920875,0.0 35.85954734920875,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="17.929774" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="55.859547" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,55.859547,60.000000)">32</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>b_bnds</span></div><div class='xr-var-dims'>(lev, bnds)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(32, 2), meta=np.ndarray&gt;</div><input id='attrs-7c721584-c3e6-4fb7-8e07-2a88e4ed4349' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-7c721584-c3e6-4fb7-8e07-2a88e4ed4349' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6c2a5d76-213a-488c-9e45-40ade204df01' class='xr-var-data-in' type='checkbox'><label for='data-6c2a5d76-213a-488c-9e45-40ade204df01' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>vertical coordinate formula term: b(k+1/2)</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 512 B </td> <td> 512 B </td></tr>
+    <tr><th> Shape </th><td> (32, 2) </td> <td> (32, 2) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="85" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="35" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="120" x2="35" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="35" y1="0" x2="35" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 35.85954734920875,0.0 35.85954734920875,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="17.929774" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="55.859547" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,55.859547,60.000000)">32</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>lat_bnds</span></div><div class='xr-var-dims'>(lat, bnds)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(96, 2), meta=np.ndarray&gt;</div><input id='attrs-613c2ed2-aeb7-4bb8-9110-f567d7ee6388' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-613c2ed2-aeb7-4bb8-9110-f567d7ee6388' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a868d2ff-a847-485d-a7a0-3d75d1a763b3' class='xr-var-data-in' type='checkbox'><label for='data-a868d2ff-a847-485d-a7a0-3d75d1a763b3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>_ChunkSizes :</span></dt><dd>[96  2]</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 1.54 kB </td> <td> 1.54 kB </td></tr>
+    <tr><th> Shape </th><td> (96, 2) </td> <td> (96, 2) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="79" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="29" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="120" x2="29" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="29" y1="0" x2="29" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 29.2612335534925,0.0 29.2612335534925,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="14.630617" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="49.261234" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,49.261234,60.000000)">96</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>lon_bnds</span></div><div class='xr-var-dims'>(lon, bnds)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(144, 2), meta=np.ndarray&gt;</div><input id='attrs-aa6a1c00-2441-4661-a59c-e3521063dca5' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-aa6a1c00-2441-4661-a59c-e3521063dca5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8b59897a-5402-4f3b-ba6f-8c60103bcc86' class='xr-var-data-in' type='checkbox'><label for='data-8b59897a-5402-4f3b-ba6f-8c60103bcc86' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>_ChunkSizes :</span></dt><dd>[144   2]</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 2.30 kB </td> <td> 2.30 kB </td></tr>
+    <tr><th> Shape </th><td> (144, 2) </td> <td> (144, 2) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float64 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="77" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="27" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="120" x2="27" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="27" y1="0" x2="27" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 27.054035963169408,0.0 27.054035963169408,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="13.527018" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >2</text>
+  <text x="47.054036" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,47.054036,60.000000)">144</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>ps</span></div><div class='xr-var-dims'>(time, lat, lon)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(120, 96, 144), meta=np.ndarray&gt;</div><input id='attrs-da58b299-2e35-4f62-9cf8-0e59a9a5b031' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-da58b299-2e35-4f62-9cf8-0e59a9a5b031' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6df596a2-752c-4eb6-8158-48c6510d079b' class='xr-var-data-in' type='checkbox'><label for='data-6df596a2-752c-4eb6-8158-48c6510d079b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Surface Air Pressure</dd><dt><span>units :</span></dt><dd>Pa</dd><dt><span>_ChunkSizes :</span></dt><dd>[  1  96 144]</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 6.64 MB </td> <td> 6.64 MB </td></tr>
+    <tr><th> Shape </th><td> (120, 96, 144) </td> <td> (120, 96, 144) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float32 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="238" height="188" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="10" y1="0" x2="68" y2="58" style="stroke-width:2" />
+  <line x1="10" y1="80" x2="68" y2="138" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="10" y1="0" x2="10" y2="80" style="stroke-width:2" />
+  <line x1="68" y1="58" x2="68" y2="138" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="10.0,0.0 68.82352941176471,58.82352941176471 68.82352941176471,138.8235294117647 10.0,80.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="10" y1="0" x2="130" y2="0" style="stroke-width:2" />
+  <line x1="68" y1="58" x2="188" y2="58" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="10" y1="0" x2="68" y2="58" style="stroke-width:2" />
+  <line x1="130" y1="0" x2="188" y2="58" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="10.0,0.0 130.0,0.0 188.8235294117647,58.82352941176471 68.82352941176471,58.82352941176471" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="68" y1="58" x2="188" y2="58" style="stroke-width:2" />
+  <line x1="68" y1="138" x2="188" y2="138" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="68" y1="58" x2="68" y2="138" style="stroke-width:2" />
+  <line x1="188" y1="58" x2="188" y2="138" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="68.82352941176471,58.82352941176471 188.8235294117647,58.82352941176471 188.8235294117647,138.8235294117647 68.82352941176471,138.8235294117647" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="128.823529" y="158.823529" font-size="1.0rem" font-weight="100" text-anchor="middle" >144</text>
+  <text x="208.823529" y="98.823529" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,208.823529,98.823529)">96</text>
+  <text x="29.411765" y="129.411765" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,29.411765,129.411765)">120</text>
+</svg>
+</td>
+</tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>mmroa</span></div><div class='xr-var-dims'>(time, lev, lat, lon)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(120, 32, 96, 144), meta=np.ndarray&gt;</div><input id='attrs-d1c691e0-5d53-4588-bb38-5a2ef27babd5' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-d1c691e0-5d53-4588-bb38-5a2ef27babd5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-637e5a0b-2023-49d7-a89e-317999cf5333' class='xr-var-data-in' type='checkbox'><label for='data-637e5a0b-2023-49d7-a89e-317999cf5333' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>standard_name :</span></dt><dd>mass_fraction_of_particulate_organic_matter_dry_aerosol_particles_in_air</dd><dt><span>long_name :</span></dt><dd>Total Organic Aerosol Mass Mixing Ratio</dd><dt><span>comment :</span></dt><dd>We recommend a scale factor of POM=1.4*OC, unless your model has more detailed info available.</dd><dt><span>units :</span></dt><dd>kg kg-1</dd><dt><span>original_name :</span></dt><dd>mmr_OM</dd><dt><span>original_units :</span></dt><dd>kg/kg</dd><dt><span>history :</span></dt><dd>2019-12-11T13:14:22Z altered by CMOR: Converted units from &#x27;kg/kg&#x27; to &#x27;kg kg-1&#x27;. 2019-12-11T13:14:25Z altered by CMOR: Converted type from &#x27;d&#x27; to &#x27;f&#x27;. 2019-12-11T13:14:25Z altered by CMOR: Inverted axis: lev.</dd><dt><span>cell_methods :</span></dt><dd>area: time: mean</dd><dt><span>cell_measures :</span></dt><dd>area: areacella</dd><dt><span>_ChunkSizes :</span></dt><dd>[  1  32  96 144]</dd></dl></div><div class='xr-var-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 212.34 MB </td> <td> 212.34 MB </td></tr>
+    <tr><th> Shape </th><td> (120, 32, 96, 144) </td> <td> (120, 32, 96, 144) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float32 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="534" height="154" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="100" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="100" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="100" y1="0" x2="100" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 100.0,0.0 100.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="50.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >120</text>
+  <text x="120.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,120.000000,12.706308)">1</text>
+
+
+  <!-- Horizontal lines -->
+  <line x1="170" y1="0" x2="194" y2="24" style="stroke-width:2" />
+  <line x1="170" y1="80" x2="194" y2="104" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="170" y1="0" x2="170" y2="80" style="stroke-width:2" />
+  <line x1="194" y1="24" x2="194" y2="104" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="170.0,0.0 194.96653881855403,24.966538818554028 194.96653881855403,104.96653881855403 170.0,80.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="170" y1="0" x2="290" y2="0" style="stroke-width:2" />
+  <line x1="194" y1="24" x2="314" y2="24" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="170" y1="0" x2="194" y2="24" style="stroke-width:2" />
+  <line x1="290" y1="0" x2="314" y2="24" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="170.0,0.0 290.0,0.0 314.966538818554,24.966538818554028 194.96653881855403,24.966538818554028" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="194" y1="24" x2="314" y2="24" style="stroke-width:2" />
+  <line x1="194" y1="104" x2="314" y2="104" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="194" y1="24" x2="194" y2="104" style="stroke-width:2" />
+  <line x1="314" y1="24" x2="314" y2="104" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="194.96653881855403,24.966538818554028 314.966538818554,24.966538818554028 314.966538818554,104.96653881855403 194.96653881855403,104.96653881855403" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="254.966539" y="124.966539" font-size="1.0rem" font-weight="100" text-anchor="middle" >144</text>
+  <text x="334.966539" y="64.966539" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,334.966539,64.966539)">96</text>
+  <text x="172.483269" y="112.483269" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,172.483269,112.483269)">32</text>
+</svg>
+</td>
+</tr>
+</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-a2fa18da-513a-47ce-ba6a-e40395336047' class='xr-section-summary-in' type='checkbox'  ><label for='section-a2fa18da-513a-47ce-ba6a-e40395336047' class='xr-section-summary' >Attributes: <span>(50)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.7 CMIP-6.2</dd><dt><span>activity_id :</span></dt><dd>CMIP</dd><dt><span>branch_method :</span></dt><dd>Hybrid-restart from year 1600-01-01 of piControl</dd><dt><span>branch_time :</span></dt><dd>0.0</dd><dt><span>branch_time_in_child :</span></dt><dd>0.0</dd><dt><span>branch_time_in_parent :</span></dt><dd>430335.0</dd><dt><span>contact :</span></dt><dd>Please send any requests or bug reports to noresm-ncc@met.no.</dd><dt><span>creation_date :</span></dt><dd>2019-12-11T13:14:25Z</dd><dt><span>data_specs_version :</span></dt><dd>01.00.31</dd><dt><span>experiment :</span></dt><dd>abrupt quadrupling of CO2</dd><dt><span>experiment_id :</span></dt><dd>abrupt-4xCO2</dd><dt><span>external_variables :</span></dt><dd>areacella</dd><dt><span>forcing_index :</span></dt><dd>1</dd><dt><span>frequency :</span></dt><dd>mon</dd><dt><span>further_info_url :</span></dt><dd>https://furtherinfo.es-doc.org/CMIP6.NCC.NorESM2-LM.abrupt-4xCO2.none.r1i1p1f1</dd><dt><span>grid :</span></dt><dd>finite-volume grid with 1.9x2.5 degree lat/lon resolution</dd><dt><span>grid_label :</span></dt><dd>gn</dd><dt><span>history :</span></dt><dd>2019-12-11T13:14:25Z ; CMOR rewrote data to be consistent with CMIP6, CF-1.7 CMIP-6.2 and CF standards.</dd><dt><span>initialization_index :</span></dt><dd>1</dd><dt><span>institution :</span></dt><dd>NorESM Climate modeling Consortium consisting of CICERO (Center for International Climate and Environmental Research, Oslo 0349), MET-Norway (Norwegian Meteorological Institute, Oslo 0313), NERSC (Nansen Environmental and Remote Sensing Center, Bergen 5006), NILU (Norwegian Institute for Air Research, Kjeller 2027), UiB (University of Bergen, Bergen 5007), UiO (University of Oslo, Oslo 0313) and UNI (Uni Research, Bergen 5008), Norway. Mailing address: NCC, c/o MET-Norway, Henrik Mohns plass 1, Oslo 0313, Norway</dd><dt><span>institution_id :</span></dt><dd>NCC</dd><dt><span>mip_era :</span></dt><dd>CMIP6</dd><dt><span>model_id :</span></dt><dd>NorESM2-LM</dd><dt><span>nominal_resolution :</span></dt><dd>250 km</dd><dt><span>parent_activity_id :</span></dt><dd>CMIP</dd><dt><span>parent_experiment_id :</span></dt><dd>piControl</dd><dt><span>parent_mip_era :</span></dt><dd>CMIP6</dd><dt><span>parent_source_id :</span></dt><dd>NorESM2-LM</dd><dt><span>parent_sub_experiment_id :</span></dt><dd>none</dd><dt><span>parent_time_units :</span></dt><dd>days since 0421-01-01</dd><dt><span>parent_variant_label :</span></dt><dd>r1i1p1f1</dd><dt><span>physics_index :</span></dt><dd>1</dd><dt><span>product :</span></dt><dd>model-output</dd><dt><span>realization_index :</span></dt><dd>1</dd><dt><span>realm :</span></dt><dd>aerosol</dd><dt><span>run_variant :</span></dt><dd>N/A</dd><dt><span>source :</span></dt><dd>NorESM2-LM (2017): 
+aerosol: OsloAero
+atmos: CAM-OSLO (2 degree resolution; 144 x 96; 32 levels; top level 3 mb)
+atmosChem: OsloChemSimp
+land: CLM
+landIce: CISM
+ocean: MICOM (1 degree resolution; 360 x 384; 70 levels; top grid cell minimum 0-2.5 m [native model uses hybrid density and generic upper-layer coordinate interpolated to z-level for contributed data])
+ocnBgchem: HAMOCC
+seaIce: CICE</dd><dt><span>source_id :</span></dt><dd>NorESM2-LM</dd><dt><span>source_type :</span></dt><dd>AOGCM AER BGC</dd><dt><span>sub_experiment :</span></dt><dd>none</dd><dt><span>sub_experiment_id :</span></dt><dd>none</dd><dt><span>table_id :</span></dt><dd>AERmon</dd><dt><span>table_info :</span></dt><dd>Creation Date:(24 July 2019) MD5:0bb394a356ef9d214d027f1aca45853e</dd><dt><span>title :</span></dt><dd>NorESM2-LM output prepared for CMIP6</dd><dt><span>variable_id :</span></dt><dd>mmroa</dd><dt><span>variant_label :</span></dt><dd>r1i1p1f1</dd><dt><span>license :</span></dt><dd>CMIP6 model data produced by NCC is licensed under a Creative Commons Attribution ShareAlike 4.0 International License (https://creativecommons.org/licenses). Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6 output, including citation requirements and proper acknowledgment. Further information about this data, including some limitations, can be found via the further_info_url (recorded as a global attribute in this file) and at https:///pcmdi.llnl.gov/. The data producers and data providers make no warranty, either express or implied, including, but not limited to, warranties of merchantability and fitness for a particular purpose. All liabilities arising from the supply of the information (including any liability arising in negligence) are excluded to the fullest extent permitted by law.</dd><dt><span>cmor_version :</span></dt><dd>3.5.0</dd><dt><span>tracking_id :</span></dt><dd>hdl:21.14100/7e00d8c9-0c7f-40fc-911b-6f7e57646f2e</dd><dt><span>DODS_EXTRA.Unlimited_Dimension :</span></dt><dd>time</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">mmroa</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray &#x27;mmroa&#x27; (time: 120, lev: 32, lat: 96, lon: 144)&gt;
+dask.array&lt;open_dataset-d0504567ed5e2e669614a36f6263cfeammroa, shape=(120, 32, 96, 144), dtype=float32, chunksize=(120, 32, 96, 144), chunktype=numpy.ndarray&gt;
+Coordinates:
+  * time     (time) object 0491-01-16 12:00:00 ... 0500-12-16 12:00:00
+  * lev      (lev) float64 0.9926 0.9763 0.9575 ... 0.01436 0.007595 0.003643
+  * lat      (lat) float64 -90.0 -88.11 -86.21 -84.32 ... 84.32 86.21 88.11 90.0
+  * lon      (lon) float64 0.0 2.5 5.0 7.5 10.0 ... 350.0 352.5 355.0 357.5
+Attributes:
+    standard_name:   mass_fraction_of_particulate_organic_matter_dry_aerosol_...
+    long_name:       Total Organic Aerosol Mass Mixing Ratio
+    comment:         We recommend a scale factor of POM=1.4*OC, unless your m...
+    units:           kg kg-1
+    original_name:   mmr_OM
+    original_units:  kg/kg
+    history:         2019-12-11T13:14:22Z altered by CMOR: Converted units fr...
+    cell_methods:    area: time: mean
+    cell_measures:   area: areacella
+    _ChunkSizes:     [  1  32  96 144]</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'>'mmroa'</div><ul class='xr-dim-list'><li><span class='xr-has-index'>time</span>: 120</li><li><span class='xr-has-index'>lev</span>: 32</li><li><span class='xr-has-index'>lat</span>: 96</li><li><span class='xr-has-index'>lon</span>: 144</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-9ba3dbe7-f53b-4645-a2e7-f5a252ed6800' class='xr-array-in' type='checkbox' checked><label for='section-9ba3dbe7-f53b-4645-a2e7-f5a252ed6800' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>dask.array&lt;chunksize=(120, 32, 96, 144), meta=np.ndarray&gt;</span></div><div class='xr-array-data'><table>
+<tr>
+<td>
+<table>
+  <thead>
+    <tr><td> </td><th> Array </th><th> Chunk </th></tr>
+  </thead>
+  <tbody>
+    <tr><th> Bytes </th><td> 212.34 MB </td> <td> 212.34 MB </td></tr>
+    <tr><th> Shape </th><td> (120, 32, 96, 144) </td> <td> (120, 32, 96, 144) </td></tr>
+    <tr><th> Count </th><td> 2 Tasks </td><td> 1 Chunks </td></tr>
+    <tr><th> Type </th><td> float32 </td><td> numpy.ndarray </td></tr>
+  </tbody>
+</table>
+</td>
+<td>
+<svg width="534" height="154" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="100" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="25" x2="100" y2="25" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="25" style="stroke-width:2" />
+  <line x1="100" y1="0" x2="100" y2="25" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 100.0,0.0 100.0,25.412616514582485 0.0,25.412616514582485" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="50.000000" y="45.412617" font-size="1.0rem" font-weight="100" text-anchor="middle" >120</text>
+  <text x="120.000000" y="12.706308" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,120.000000,12.706308)">1</text>
+
+
+  <!-- Horizontal lines -->
+  <line x1="170" y1="0" x2="194" y2="24" style="stroke-width:2" />
+  <line x1="170" y1="80" x2="194" y2="104" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="170" y1="0" x2="170" y2="80" style="stroke-width:2" />
+  <line x1="194" y1="24" x2="194" y2="104" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="170.0,0.0 194.96653881855403,24.966538818554028 194.96653881855403,104.96653881855403 170.0,80.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="170" y1="0" x2="290" y2="0" style="stroke-width:2" />
+  <line x1="194" y1="24" x2="314" y2="24" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="170" y1="0" x2="194" y2="24" style="stroke-width:2" />
+  <line x1="290" y1="0" x2="314" y2="24" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="170.0,0.0 290.0,0.0 314.966538818554,24.966538818554028 194.96653881855403,24.966538818554028" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="194" y1="24" x2="314" y2="24" style="stroke-width:2" />
+  <line x1="194" y1="104" x2="314" y2="104" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="194" y1="24" x2="194" y2="104" style="stroke-width:2" />
+  <line x1="314" y1="24" x2="314" y2="104" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="194.96653881855403,24.966538818554028 314.966538818554,24.966538818554028 314.966538818554,104.96653881855403 194.96653881855403,104.96653881855403" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="254.966539" y="124.966539" font-size="1.0rem" font-weight="100" text-anchor="middle" >144</text>
+  <text x="334.966539" y="64.966539" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,334.966539,64.966539)">96</text>
+  <text x="172.483269" y="112.483269" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,172.483269,112.483269)">32</text>
+</svg>
+</td>
+</tr>
+</table></div></div></li><li class='xr-section-item'><input id='section-ff958075-55c6-43cc-8448-ad710343c530' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ff958075-55c6-43cc-8448-ad710343c530' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>0491-01-16 12:00:00 ... 0500-12-...</div><input id='attrs-b092e91a-a6af-489b-b319-5e45f42b6396' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-b092e91a-a6af-489b-b319-5e45f42b6396' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f3365bed-78c7-4088-8b61-2d8945be324a' class='xr-var-data-in' type='checkbox'><label for='data-f3365bed-78c7-4088-8b61-2d8945be324a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>time_bnds</dd><dt><span>axis :</span></dt><dd>T</dd><dt><span>long_name :</span></dt><dd>time</dd><dt><span>standard_name :</span></dt><dd>time</dd><dt><span>_ChunkSizes :</span></dt><dd>1</dd></dl></div><div class='xr-var-data'><pre>array([cftime.DatetimeNoLeap(491, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(491, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(492, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(493, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(494, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(495, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(496, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(497, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(498, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(499, 12, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 1, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 2, 15, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 3, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 4, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 5, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 6, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 7, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 8, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 9, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 10, 16, 12, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 11, 16, 0, 0, 0, 0),
+       cftime.DatetimeNoLeap(500, 12, 16, 12, 0, 0, 0)], dtype=object)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lev</span></div><div class='xr-var-dims'>(lev)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.9926 0.9763 ... 0.007595 0.003643</div><input id='attrs-21e5d725-251f-41f6-9415-310ace5db362' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-21e5d725-251f-41f6-9415-310ace5db362' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0c4fa90f-f606-4003-a677-cba5297bff18' class='xr-var-data-in' type='checkbox'><label for='data-0c4fa90f-f606-4003-a677-cba5297bff18' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>lev_bnds</dd><dt><span>units :</span></dt><dd>1</dd><dt><span>axis :</span></dt><dd>Z</dd><dt><span>positive :</span></dt><dd>down</dd><dt><span>long_name :</span></dt><dd>hybrid sigma pressure coordinate</dd><dt><span>standard_name :</span></dt><dd>atmosphere_hybrid_sigma_pressure_coordinate</dd><dt><span>formula :</span></dt><dd>p = a*p0 + b*ps</dd><dt><span>formula_terms :</span></dt><dd>p0: p0 a: a b: b ps: ps</dd></dl></div><div class='xr-var-data'><pre>array([0.992556, 0.976325, 0.957485, 0.936198, 0.912645, 0.88702 , 0.859535,
+       0.820858, 0.763404, 0.691389, 0.609779, 0.524687, 0.445993, 0.379101,
+       0.322242, 0.273911, 0.232829, 0.197908, 0.168225, 0.142994, 0.121547,
+       0.103317, 0.087821, 0.073751, 0.06152 , 0.051677, 0.043194, 0.035923,
+       0.024612, 0.014357, 0.007595, 0.003643])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lat</span></div><div class='xr-var-dims'>(lat)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-90.0 -88.11 -86.21 ... 88.11 90.0</div><input id='attrs-0229adec-8749-4d48-a245-1bbdf56f7ff8' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-0229adec-8749-4d48-a245-1bbdf56f7ff8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ba96e6ac-4e65-4ce2-9a1f-61f6b9bfb57b' class='xr-var-data-in' type='checkbox'><label for='data-ba96e6ac-4e65-4ce2-9a1f-61f6b9bfb57b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>lat_bnds</dd><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>Latitude</dd><dt><span>standard_name :</span></dt><dd>latitude</dd></dl></div><div class='xr-var-data'><pre>array([-90.      , -88.105263, -86.210526, -84.315789, -82.421053, -80.526316,
+       -78.631579, -76.736842, -74.842105, -72.947368, -71.052632, -69.157895,
+       -67.263158, -65.368421, -63.473684, -61.578947, -59.684211, -57.789474,
+       -55.894737, -54.      , -52.105263, -50.210526, -48.315789, -46.421053,
+       -44.526316, -42.631579, -40.736842, -38.842105, -36.947368, -35.052632,
+       -33.157895, -31.263158, -29.368421, -27.473684, -25.578947, -23.684211,
+       -21.789474, -19.894737, -18.      , -16.105263, -14.210526, -12.315789,
+       -10.421053,  -8.526316,  -6.631579,  -4.736842,  -2.842105,  -0.947368,
+         0.947368,   2.842105,   4.736842,   6.631579,   8.526316,  10.421053,
+        12.315789,  14.210526,  16.105263,  18.      ,  19.894737,  21.789474,
+        23.684211,  25.578947,  27.473684,  29.368421,  31.263158,  33.157895,
+        35.052632,  36.947368,  38.842105,  40.736842,  42.631579,  44.526316,
+        46.421053,  48.315789,  50.210526,  52.105263,  54.      ,  55.894737,
+        57.789474,  59.684211,  61.578947,  63.473684,  65.368421,  67.263158,
+        69.157895,  71.052632,  72.947368,  74.842105,  76.736842,  78.631579,
+        80.526316,  82.421053,  84.315789,  86.210526,  88.105263,  90.      ])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lon</span></div><div class='xr-var-dims'>(lon)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0 2.5 5.0 ... 352.5 355.0 357.5</div><input id='attrs-c58b7129-4904-4c52-921d-1d749d877167' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-c58b7129-4904-4c52-921d-1d749d877167' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2bb8a740-4ba8-4d2d-8ff6-afbf641d80dd' class='xr-var-data-in' type='checkbox'><label for='data-2bb8a740-4ba8-4d2d-8ff6-afbf641d80dd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>bounds :</span></dt><dd>lon_bnds</dd><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>Longitude</dd><dt><span>standard_name :</span></dt><dd>longitude</dd></dl></div><div class='xr-var-data'><pre>array([  0. ,   2.5,   5. ,   7.5,  10. ,  12.5,  15. ,  17.5,  20. ,  22.5,
+        25. ,  27.5,  30. ,  32.5,  35. ,  37.5,  40. ,  42.5,  45. ,  47.5,
+        50. ,  52.5,  55. ,  57.5,  60. ,  62.5,  65. ,  67.5,  70. ,  72.5,
+        75. ,  77.5,  80. ,  82.5,  85. ,  87.5,  90. ,  92.5,  95. ,  97.5,
+       100. , 102.5, 105. , 107.5, 110. , 112.5, 115. , 117.5, 120. , 122.5,
+       125. , 127.5, 130. , 132.5, 135. , 137.5, 140. , 142.5, 145. , 147.5,
+       150. , 152.5, 155. , 157.5, 160. , 162.5, 165. , 167.5, 170. , 172.5,
+       175. , 177.5, 180. , 182.5, 185. , 187.5, 190. , 192.5, 195. , 197.5,
+       200. , 202.5, 205. , 207.5, 210. , 212.5, 215. , 217.5, 220. , 222.5,
+       225. , 227.5, 230. , 232.5, 235. , 237.5, 240. , 242.5, 245. , 247.5,
+       250. , 252.5, 255. , 257.5, 260. , 262.5, 265. , 267.5, 270. , 272.5,
+       275. , 277.5, 280. , 282.5, 285. , 287.5, 290. , 292.5, 295. , 297.5,
+       300. , 302.5, 305. , 307.5, 310. , 312.5, 315. , 317.5, 320. , 322.5,
+       325. , 327.5, 330. , 332.5, 335. , 337.5, 340. , 342.5, 345. , 347.5,
+       350. , 352.5, 355. , 357.5])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-f42f1296-e388-4084-ac62-741c952b3a5a' class='xr-section-summary-in' type='checkbox'  ><label for='section-f42f1296-e388-4084-ac62-741c952b3a5a' class='xr-section-summary' >Attributes: <span>(10)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>standard_name :</span></dt><dd>mass_fraction_of_particulate_organic_matter_dry_aerosol_particles_in_air</dd><dt><span>long_name :</span></dt><dd>Total Organic Aerosol Mass Mixing Ratio</dd><dt><span>comment :</span></dt><dd>We recommend a scale factor of POM=1.4*OC, unless your model has more detailed info available.</dd><dt><span>units :</span></dt><dd>kg kg-1</dd><dt><span>original_name :</span></dt><dd>mmr_OM</dd><dt><span>original_units :</span></dt><dd>kg/kg</dd><dt><span>history :</span></dt><dd>2019-12-11T13:14:22Z altered by CMOR: Converted units from &#x27;kg/kg&#x27; to &#x27;kg kg-1&#x27;. 2019-12-11T13:14:25Z altered by CMOR: Converted type from &#x27;d&#x27; to &#x27;f&#x27;. 2019-12-11T13:14:25Z altered by CMOR: Inverted axis: lev.</dd><dt><span>cell_methods :</span></dt><dd>area: time: mean</dd><dt><span>cell_measures :</span></dt><dd>area: areacella</dd><dt><span>_ChunkSizes :</span></dt><dd>[  1  32  96 144]</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<p>Plot a map from a specific date.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span><span class="mi">13</span><span class="p">])</span>
+
+<span class="c1"># Set the projection to use for plotting</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+
+<span class="n">ds</span><span class="o">.</span><span class="n">mmroa</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">lev</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">cftime</span><span class="o">.</span><span class="n">DatetimeNoLeap</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmaps</span><span class="o">.</span><span class="n">BlueYellowRed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x7f3878824460&gt;
+</pre></div>
+</div>
+<img alt="../../_images/search_and_load_with_esgf_opendap_10_1.png" src="../../_images/search_and_load_with_esgf_opendap_10_1.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./examples/notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="save_to_cesnet_bucket_zarr_s3fs.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Save files to EOSC (CESNET)</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="some-xarray-pandas-presentation_Sara.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Some tips with xarray and pandas</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Pangeo<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

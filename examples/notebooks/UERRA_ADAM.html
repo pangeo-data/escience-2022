@@ -1,0 +1,2169 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Using ADAM-API to access UERRA regional reanalysis &#8212; Pangeo Tutorial for the eScience Course 2022</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Rolling mean with CMIP6" href="gridded_model_data_rolling_mean.html" />
+    <link rel="prev" title="Using ADAM-API to access MODIS Aqua CHL" href="MOD_AquaCHL_ADAM.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/pangeo_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Pangeo Tutorial for the eScience Course 2022</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome 👋
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Before the workshop
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../before/setup.html">
+   Setup: how to run the tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Pangeo 101
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/xarray_introduction.html">
+   Handling multi-dimensional arrays with xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/visualization.html">
+   Interactive plotting with holoviews
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/data_discovery.html">
+   Data access and discovery
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/chunking_introduction.html">
+   Chunking
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/dask_introduction.html">
+   Parallel computing with dask
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Resources and Examples
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../examples.html">
+   How to
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CMIP6-ocean.html">
+   Multidimensional Coordinates example using CMIP6 Pangeo ocean model data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CMIP6_example.html">
+   Manipulation of CMIP6 model data using Pangeo catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MODIS-seaice.html">
+   MODIS Sea-ice
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MOD_AquaCHL_ADAM.html">
+   Using ADAM-API to access MODIS Aqua CHL
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Using ADAM-API to access UERRA regional reanalysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gridded_model_data_rolling_mean.html">
+   Rolling mean with CMIP6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="masked_and_weighted_average.html">
+   Using masks and computing weighted average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="nird-ESGF.html">
+   Using public data on NIRD using s3 and saving results in private s3 object storage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="projections.html">
+   Using cartopy and projections for plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-AERONET.html">
+   Reading AERONET data with pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-MODIS.html">
+   Reading MODIS data with xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-MODIS-SUB-XYD-xarray.html">
+   Read MODIS Terra/Aqua netcdf as xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_larger_files_to_forces_bucket.html">
+   Save files from bucket to bucket
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_netcdf.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr-without_find.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr_s3fs.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="search_and_load_with_esgf_opendap.html">
+   Search and Load CMIP6 Data via ESGF / OPeNDAP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="some-xarray-pandas-presentation_Sara.html">
+   Some tips with xarray and pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="xarray2pandas.html">
+   From xarray to pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="xesmf_regridding.html">
+   Regridding model data with xESMF
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Beyond the workshop
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/resources.html">
+   Join the community!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/pythia.html">
+   Project Pythia
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/envds-book.html">
+   Environmental Data Science Book
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://notebooks.gesis.org/binder/v2/gh/pangeo-data/escience-2022/main?urlpath=lab/tree/tutorial/examples/notebooks/UERRA_ADAM.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://pangeo-eosc.vm.fedcloud.eu/hub/user-redirect/git-pull?repo=https%3A//github.com/pangeo-data/escience-2022&urlpath=lab/tree/escience-2022/tutorial/examples/notebooks/UERRA_ADAM.ipynb&branch=main"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/pangeo-data/escience-2022"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/pangeo-data/escience-2022/issues/new?title=Issue%20on%20page%20%2Fexamples/notebooks/UERRA_ADAM.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/examples/notebooks/UERRA_ADAM.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-uerra-datasets">
+   Discover UERRA datasets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-metadata-from-snow-density">
+   Get metadata from Snow density
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-and-select-products-from-a-dataset">
+   Discover and select products from a dataset
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-data-over-the-nordics-countries">
+     Get data over the Nordics countries
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#search-data">
+       Search data
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-data">
+   Get data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-analysis-and-visualization">
+   Data analysis and Visualization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unzip-data">
+     Unzip data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#read-data-in-xarray">
+   Read data in xarray
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Using ADAM-API to access UERRA regional reanalysis</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-uerra-datasets">
+   Discover UERRA datasets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-metadata-from-snow-density">
+   Get metadata from Snow density
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-and-select-products-from-a-dataset">
+   Discover and select products from a dataset
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-data-over-the-nordics-countries">
+     Get data over the Nordics countries
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#search-data">
+       Search data
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-data">
+   Get data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-analysis-and-visualization">
+   Data analysis and Visualization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unzip-data">
+     Unzip data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#read-data-in-xarray">
+   Read data in xarray
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="using-adam-api-to-access-uerra-regional-reanalysis">
+<h1>Using ADAM-API to access UERRA regional reanalysis<a class="headerlink" href="#using-adam-api-to-access-uerra-regional-reanalysis" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>you need to get an account to <a class="reference external" href="https://reliance.adamplatform.eu/">https://reliance.adamplatform.eu/</a> (use ORCID to authenticate) and key your ADAM API key</p></li>
+<li><p>make sure you save your ADAM API key in a file <code class="docutils literal notranslate"><span class="pre">$HOME/adam-key</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install adamapi
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">WARNING: The directory &#39;/home/jovyan/.cache/pip&#39; or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you may want sudo&#39;s -H flag.</span>
+Requirement already satisfied: adamapi in /opt/conda/lib/python3.8/site-packages (2.0.11)
+Requirement already satisfied: requests&gt;=2.22.0 in /opt/conda/lib/python3.8/site-packages (from adamapi) (2.25.1)
+Requirement already satisfied: imageio in /opt/conda/lib/python3.8/site-packages (from adamapi) (2.9.0)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (1.26.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (2020.12.5)
+Requirement already satisfied: chardet&lt;5,&gt;=3.0.2 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (4.0.0)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (2.10)
+Requirement already satisfied: pillow in /opt/conda/lib/python3.8/site-packages (from imageio-&gt;adamapi) (8.1.2)
+Requirement already satisfied: numpy in /opt/conda/lib/python3.8/site-packages (from imageio-&gt;adamapi) (1.20.1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">adamapi</span> <span class="k">as</span> <span class="nn">adam</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">from</span> <span class="nn">cmcrameri</span> <span class="kn">import</span> <span class="n">cm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adam_key</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span><span class="s2">&quot;adam-key&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">adam</span><span class="o">.</span><span class="n">Auth</span><span class="p">()</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">setKey</span><span class="p">(</span><span class="n">adam_key</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">setAdamCore</span><span class="p">(</span><span class="s1">&#39;https://reliance.adamplatform.eu&#39;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">authorize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;expires_at&#39;: &#39;2021-10-19T15:58:51.934Z&#39;,
+ &#39;access_token&#39;: &#39;cfe0ed4d1ce94333814478fc77c323b4&#39;,
+ &#39;refresh_token&#39;: &#39;93f51e708ce4470092a426ed8c071523&#39;,
+ &#39;expires_in&#39;: 3600}
+</pre></div>
+</div>
+</div>
+</div>
+<section id="discover-uerra-datasets">
+<h2>Discover UERRA datasets<a class="headerlink" href="#discover-uerra-datasets" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>This step is useful to get the dataset identifier (unique for a given datacube)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">discoverDasasets</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">search_name</span><span class="p">):</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">adam</span><span class="o">.</span><span class="n">Datasets</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">catalogue</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">getDatasets</span><span class="p">()</span>
+    <span class="c1">#Extracting the size of the catalogue</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">catalogue</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;totalResults&#39;</span><span class="p">]</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">catalogue</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;itemsPerPage&#39;</span><span class="p">]</span>
+    <span class="n">pages</span> <span class="o">=</span> <span class="n">total</span><span class="o">//</span><span class="n">items</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------------------------------------&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span> <span class="o">+</span> <span class="s1">&#39;List of available datasets:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+
+    <span class="c1">#Extracting the list of datasets across the whole catalogue</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">pages</span><span class="p">):</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">getDatasets</span><span class="p">(</span><span class="n">page</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]:</span> 
+            <span class="k">if</span> <span class="n">search_name</span> <span class="ow">in</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1m&quot;</span> <span class="o">+</span> <span class="s2">&quot; --&gt; datasetId &quot;</span><span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span> <span class="o">+</span> <span class="s2">&quot;= &quot;</span> <span class="o">+</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;datasetId&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">datasets</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datasets</span> <span class="o">=</span> <span class="n">discoverDasasets</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;UERRA&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------
+<span class=" -Color -Color-Bold">List of available datasets:</span>
+
+UERRA_2M_TEMPERATURE<span class=" -Color -Color-Bold"> --&gt; datasetId </span>= 71114:UERRA_2M_TEMPERATURE
+UERRA_ALBEDO<span class=" -Color -Color-Bold"> --&gt; datasetId </span>= 80984:UERRA_ALBEDO
+UERRA_OROGRAPHY<span class=" -Color -Color-Bold"> --&gt; datasetId </span>= 80985:UERRA_OROGRAPHY
+UERRA_SKIN_TEMPERATURE<span class=" -Color -Color-Bold"> --&gt; datasetId </span>= 80982:UERRA_SKIN_TEMPERATURE
+UERRA_SNOW_DENSITY<span class=" -Color -Color-Bold"> --&gt; datasetId </span>= 71100:UERRA_SNOW_DENSITY
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-metadata-from-snow-density">
+<h2>Get metadata from Snow density<a class="headerlink" href="#get-metadata-from-snow-density" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datasetID</span> <span class="o">=</span> <span class="s1">&#39;71100:UERRA_SNOW_DENSITY&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1;34m&#39;</span> <span class="o">+</span> <span class="s1">&#39;Metadata of &#39;</span> <span class="o">+</span> <span class="n">datasetID</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0;0m&#39;</span><span class="p">)</span>
+
+<span class="n">paged</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">getDatasets</span><span class="p">(</span><span class="n">datasetID</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">paged</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1m&quot;</span> <span class="o">+</span>  <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Blue">Metadata of 71100:UERRA_SNOW_DENSITY:</span>
+
+<span class=" -Color -Color-Bold">datasetId</span>: 71100:UERRA_SNOW_DENSITY
+<span class=" -Color -Color-Bold">creationDate</span>: 2018-07-31T00:00:00Z
+<span class=" -Color -Color-Bold">dataType</span>: Float32
+<span class=" -Color -Color-Bold">epsg</span>: 4326
+<span class=" -Color -Color-Bold">keywords</span>: []
+<span class=" -Color -Color-Bold">license</span>: {&#39;documentationUrl&#39;: &#39;&#39;, &#39;dataProviderName&#39;: &#39;ECMWF&#39;, &#39;dataProviderUrl&#39;: &#39;&#39;, &#39;licenseId&#39;: &#39;&#39;, &#39;dataPolicy&#39;: &#39;&#39;, &#39;doi&#39;: &#39;&#39;, &#39;credits&#39;: &#39;&#39;}
+<span class=" -Color -Color-Bold">maxValue</span>: [300.0]
+<span class=" -Color -Color-Bold">minValue</span>: [0.0]
+<span class=" -Color -Color-Bold">noDataValue</span>: -9999
+<span class=" -Color -Color-Bold">numberOfRecords</span>: 60251
+<span class=" -Color -Color-Bold">profile</span>: {&#39;profileSchema&#39;: &#39;eo_profile_schema.json&#39;, &#39;name&#39;: &#39;Earth Observation&#39;, &#39;mission&#39;: &#39;UERRA&#39;, &#39;sensor&#39;: &#39;UERRA&#39;, &#39;processingLevel&#39;: &#39;L1&#39;, &#39;instrument&#39;: &#39;&#39;, &#39;platform&#39;: &#39;&#39;}
+<span class=" -Color -Color-Bold">resolutionUnit</span>: degree
+<span class=" -Color -Color-Bold">temporalResolution</span>: Daily
+<span class=" -Color -Color-Bold">unit</span>: 
+<span class=" -Color -Color-Bold">unitDescription</span>: 
+<span class=" -Color -Color-Bold">updateDate</span>: 2021-08-31T09:29:26Z
+<span class=" -Color -Color-Bold">geometry</span>: {&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-179.9940193, -88.9158823], [180.0, -88.9158823], [180.0, 89.0841177], [-179.9940193, 89.0841177], [-179.9940193, -88.9158823]]]}
+<span class=" -Color -Color-Bold">resolutions</span>: [0.1]
+<span class=" -Color -Color-Bold">anyText</span>: 4326,ESA,Daily,ESA
+<span class=" -Color -Color-Bold">applications</span>: [&#39;Atmosphere&#39;]
+<span class=" -Color -Color-Bold">datasetManager</span>: mantovani@meeo.it
+<span class=" -Color -Color-Bold">datasetManagerOrganisation</span>: meeo
+<span class=" -Color -Color-Bold">description</span>: UERRA_SNOW_DENSITY
+<span class=" -Color -Color-Bold">title</span>: UERRA_SNOW_DENSITY
+<span class=" -Color -Color-Bold">timeReferenceSystem</span>: UTC
+<span class=" -Color -Color-Bold">units</span>: kg m-3
+<span class=" -Color -Color-Bold">unitsDescription</span>: Density
+<span class=" -Color -Color-Bold">services</span>: [&#39;MWCS&#39;, &#39;ADAM&#39;, &#39;AdamApi&#39;]
+<span class=" -Color -Color-Bold">technicalManager</span>: govoni@meeo.it
+<span class=" -Color -Color-Bold">filtersEnabled</span>: {&#39;type&#39;: &#39;object&#39;, &#39;title&#39;: &#39;Dataset filters&#39;, &#39;properties&#39;: {&#39;startDate&#39;: {&#39;title&#39;: &#39;Start Date&#39;, &#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date&#39;, &#39;text_rule&#39;: &#39;false&#39;, &#39;ops_only&#39;: &#39;false&#39;, &#39;math_rule&#39;: &#39;false&#39;, &#39;order_rule&#39;: &#39;false&#39;, &#39;pattern&#39;: &#39;^d{4}-[01]d-[0-3]d(T[0-2]d:[0-9]d:[0-9]dZ)?$&#39;}, &#39;endDate&#39;: {&#39;title&#39;: &#39;End Date&#39;, &#39;type&#39;: &#39;string&#39;, &#39;format&#39;: &#39;date&#39;, &#39;ops_only&#39;: &#39;false&#39;, &#39;text_rule&#39;: &#39;false&#39;, &#39;math_rule&#39;: &#39;false&#39;, &#39;order_rule&#39;: &#39;false&#39;, &#39;pattern&#39;: &#39;^d{4}-[01]d-[0-3]d(T[0-2]d:[0-9]d:[0-9]dZ)?$&#39;}}}
+<span class=" -Color -Color-Bold">starDate</span>: 2014-08-01T00:00:00Z
+<span class=" -Color -Color-Bold">endDate</span>: 2019-07-31T18:00:00Z
+<span class=" -Color -Color-Bold">accounting</span>: {&#39;unit&#39;: 0.0032}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="discover-and-select-products-from-a-dataset">
+<h2>Discover and select products from a dataset<a class="headerlink" href="#discover-and-select-products-from-a-dataset" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>for a given time range and spatial coverage</p></li>
+</ul>
+<section id="get-data-over-the-nordics-countries">
+<h3>Get data over the Nordics countries<a class="headerlink" href="#get-data-over-the-nordics-countries" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>The geometry field is extracted from a GeoJSON object , retrieving the value of the “feature” element.</p></li>
+</ul>
+<section id="search-data">
+<h4>Search data<a class="headerlink" href="#search-data" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p>only print the first 10 products</p></li>
+<li><p>UERRA reanalysis are provided 4 times a day (00, 06, 12, 18 UTC)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install geojson_rewind
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">WARNING: The directory &#39;/home/jovyan/.cache/pip&#39; or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you may want sudo&#39;s -H flag.</span>
+Requirement already satisfied: geojson_rewind in /opt/conda/lib/python3.8/site-packages (1.0.1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">adamapi</span> <span class="kn">import</span> <span class="n">Search</span>
+<span class="kn">from</span> <span class="nn">geojson_rewind</span> <span class="kn">import</span> <span class="n">rewind</span>
+<span class="kn">import</span> <span class="nn">json</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The GeoJson object needs to be rearranged according to the counterclockwise winding order.This operation is executed in the next few lines to obtain a geometry that meets the requirements of the method. Geom_1 is the final result to be used in the discovery operation.</p>
+<ul class="simple">
+<li><p>you can go to <a class="reference external" href="https://geojson.io/">https://geojson.io/</a> to draw an area of interest (save the produced geojson to a file)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;nordics.geojson&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">geom_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">rewind</span><span class="p">(</span><span class="n">geom_dict</span><span class="p">)</span>    
+<span class="n">geom_1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">geom_dict</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;geometry&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geom_1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[2.021484375, 54.36775852406841], [42.626953125, 54.36775852406841], [42.626953125, 71.88357830131248], [2.021484375, 71.88357830131248], [2.021484375, 54.36775852406841]]]}&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_date</span> <span class="o">=</span> <span class="s1">&#39;2015-01-01T00:00:00Z&#39;</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="s1">&#39;2015-12-31T00:00:00Z&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search</span> <span class="o">=</span> <span class="n">Search</span><span class="p">(</span> <span class="n">a</span> <span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">getProducts</span><span class="p">(</span>
+    <span class="n">datasetID</span><span class="p">,</span> 
+    <span class="n">geometry</span><span class="o">=</span> <span class="n">geom_1</span><span class="p">,</span>
+    <span class="n">startDate</span> <span class="o">=</span> <span class="n">start_date</span><span class="p">,</span>
+    <span class="n">endDate</span> <span class="o">=</span> <span class="n">end_date</span>
+ <span class="p">)</span>
+
+<span class="c1"># Printing the results</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span> <span class="o">+</span> <span class="s1">&#39;List of available products:&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]:</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31;1m&quot;</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;------------------------------------&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">List of available products:</span>
+
+<span class=" -Color -Color-Bold -Color-Bold-Red">#1</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2f0d57e43c6680b3b62&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-31T00:00:00Z
+productId: UERRA_SNOW_DENSITY_20151231000000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:24Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#2</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2efd57e43c6680b3b16&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-30T18:00:00Z
+productId: UERRA_SNOW_DENSITY_20151230180000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:23Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#3</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2efd57e43c6680b3b1a&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-30T12:00:00Z
+productId: UERRA_SNOW_DENSITY_20151230120000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:23Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#4</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2efd57e43c6680b3b07&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-30T06:00:00Z
+productId: UERRA_SNOW_DENSITY_20151230060000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:23Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#5</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2efd57e43c6680b3b03&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-30T00:00:00Z
+productId: UERRA_SNOW_DENSITY_20151230000000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:23Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#6</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2eed57e43c6680b3ab5&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-29T18:00:00Z
+productId: UERRA_SNOW_DENSITY_20151229180000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:22Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#7</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2eed57e43c6680b3ab8&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-29T12:00:00Z
+productId: UERRA_SNOW_DENSITY_20151229120000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:22Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#8</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2eed57e43c6680b3aae&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-29T06:00:00Z
+productId: UERRA_SNOW_DENSITY_20151229060000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:22Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#9</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2eed57e43c6680b3aa4&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-29T00:00:00Z
+productId: UERRA_SNOW_DENSITY_20151229000000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:22Z
+status: Online
+------------------------------------
+<span class=" -Color -Color-Bold -Color-Bold-Red">#10</span>
+
+_id: {&#39;$oid&#39;: &#39;612df2edd57e43c6680b3a07&#39;}
+datasetId: UERRA_SNOW_DENSITY
+productDate: 2015-12-28T18:00:00Z
+productId: UERRA_SNOW_DENSITY_20151228180000.tif
+geometry: {&#39;geometries&#39;: [{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-0.0940193, -88.9158823], [178.9059807, -88.9158823], [178.9059807, 89.0841177], [-0.0940193, 89.0841177], [-0.0940193, -88.9158823]]]}], &#39;type&#39;: &#39;GeometryCollection&#39;}
+insertDate: 2021-08-31T09:14:21Z
+status: Online
+------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="get-data">
+<h2>Get data<a class="headerlink" href="#get-data" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>be aware that you alwasy get daily average from ADAM-API</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getZipData</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;outputFname&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">or</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;outputFname&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">adam</span><span class="o">.</span><span class="n">GetData</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span>
+        <span class="n">datasetId</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;datasetID&#39;</span><span class="p">],</span>
+        <span class="n">startDate</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;startDate&#39;</span><span class="p">],</span>
+        <span class="n">endDate</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;endDate&#39;</span><span class="p">],</span>
+        <span class="n">geometry</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">],</span>
+        <span class="n">outputFname</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;outputFname&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">output_file</span> <span class="o">=</span> <span class="s1">&#39;./UERRA_SNOW_DENSITY_SWE_ADAMAPI_&#39;</span> <span class="o">+</span> <span class="n">start_date</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">end_date</span> <span class="o">+</span> <span class="s1">&#39;.zip&#39;</span>
+
+<span class="n">datasetInfo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;datasetID&#39;</span>   <span class="p">:</span> <span class="n">datasetID</span><span class="p">,</span>
+    <span class="s1">&#39;startDate&#39;</span>   <span class="p">:</span> <span class="n">start_date</span><span class="p">,</span>
+    <span class="s1">&#39;endDate&#39;</span>     <span class="p">:</span> <span class="n">end_date</span><span class="p">,</span>
+    <span class="s1">&#39;geometry&#39;</span>    <span class="p">:</span> <span class="n">geom_1</span><span class="p">,</span>
+    <span class="s1">&#39;outputFname&#39;</span> <span class="p">:</span> <span class="n">output_file</span>
+    <span class="p">}</span>
+<span class="n">getZipData</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">datasetInfo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 148 µs, sys: 0 ns, total: 148 µs
+Wall time: 154 µs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-analysis-and-visualization">
+<h2>Data analysis and Visualization<a class="headerlink" href="#data-analysis-and-visualization" title="Permalink to this headline">#</a></h2>
+<section id="unzip-data">
+<h3>Unzip data<a class="headerlink" href="#unzip-data" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unzipData</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">unzipData</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="read-data-in-xarray">
+<h2>Read data in xarray<a class="headerlink" href="#read-data-in-xarray" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">paths_to_datetimeindex</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+    <span class="k">return</span>  <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">t</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getData</span><span class="p">(</span><span class="n">dirtif</span><span class="p">,</span> <span class="n">varname</span><span class="p">):</span>
+    <span class="n">geotiff_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">dirtif</span><span class="p">)</span>
+    <span class="c1"># Create variable used for time axis</span>
+    <span class="n">time_var</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">paths_to_datetimeindex</span><span class="p">(</span><span class="n">geotiff_list</span><span class="p">))</span>
+    <span class="c1"># Load in and concatenate all individual GeoTIFFs</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">xr</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">parse_coordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">geotiff_list</span><span class="p">],</span>
+                        <span class="n">dim</span><span class="o">=</span><span class="n">time_var</span><span class="p">)</span>
+    <span class="c1"># Covert our xarray.DataArray into a xarray.Dataset</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">to_dataset</span><span class="p">(</span><span class="s1">&#39;band&#39;</span><span class="p">)</span>
+    <span class="c1"># Rename the dimensions to make it CF-convention compliant</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">rename_dims</span><span class="p">({</span><span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="s1">&#39;longitude&#39;</span><span class="p">})</span>
+    <span class="c1"># Rename the variable to a more useful name</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">rename_vars</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="n">varname</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="s1">&#39;longitude&#39;</span><span class="p">})</span>
+    <span class="c1"># set attribute to variable</span>
+    <span class="n">geotiffs_da</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;units&#39;</span> <span class="p">:</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">varname</span> <span class="o">+</span> <span class="s1">&#39;#units&#39;</span><span class="p">],</span> <span class="s1">&#39;long_name&#39;</span> <span class="p">:</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">varname</span> <span class="o">+</span> <span class="s1">&#39;#long_name&#39;</span><span class="p">]}</span>
+    <span class="k">return</span> <span class="n">geotiffs_da</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span> <span class="s1">&#39;*.tif&#39;</span><span class="p">)</span>
+<span class="n">geotiff_ds</span> <span class="o">=</span> <span class="n">getData</span><span class="p">(</span><span class="n">path_files</span><span class="p">,</span> <span class="s1">&#39;rsn&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geotiff_ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:    (latitude: 176, longitude: 407, time: 365)
+Coordinates:
+  * latitude   (latitude) float64 71.83 71.73 71.63 71.53 ... 54.53 54.43 54.33
+  * longitude  (longitude) float64 2.056 2.156 2.256 2.356 ... 42.46 42.56 42.66
+  * time       (time) datetime64[ns] 2015-01-01 2015-01-02 ... 2015-12-31
+Data variables:
+    rsn        (time, latitude, longitude) float32 -9.999e+03 ... -9.999e+03
+Attributes: (12/57)
+    transform:                                    (0.1, 0.0, 2.00598068127238...
+    crs:                                          +init=epsg:4326
+    res:                                          (0.1, 0.1)
+    is_tiled:                                     0
+    nodatavals:                                   (-9999.0,)
+    scales:                                       (1.0,)
+    ...                                           ...
+    rsn#units:                                    kg m**-3
+    rsn#_FillValue:                               nan
+    time#calendar:                                proleptic_gregorian
+    time#long_name:                               initial time of forecast
+    time#standard_name:                           forecast_reference_time
+    time#units:                                   seconds since 1970-01-01</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-1cb7d4d4-56b2-44fb-aaa0-a1891904704c' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-1cb7d4d4-56b2-44fb-aaa0-a1891904704c' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>latitude</span>: 176</li><li><span class='xr-has-index'>longitude</span>: 407</li><li><span class='xr-has-index'>time</span>: 365</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-aac61411-bf95-4ea8-9939-3fb084578244' class='xr-section-summary-in' type='checkbox'  checked><label for='section-aac61411-bf95-4ea8-9939-3fb084578244' class='xr-section-summary' >Coordinates: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>latitude</span></div><div class='xr-var-dims'>(latitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>71.83 71.73 71.63 ... 54.43 54.33</div><input id='attrs-432b05ea-55fa-495f-89a7-29ddbd6eff6d' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-432b05ea-55fa-495f-89a7-29ddbd6eff6d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-10990fd7-e005-4bac-9d54-74b75121c49c' class='xr-var-data-in' type='checkbox'><label for='data-10990fd7-e005-4bac-9d54-74b75121c49c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([71.834118, 71.734118, 71.634118, 71.534118, 71.434118, 71.334118,
+       71.234118, 71.134118, 71.034118, 70.934118, 70.834118, 70.734118,
+       70.634118, 70.534118, 70.434118, 70.334118, 70.234118, 70.134118,
+       70.034118, 69.934118, 69.834118, 69.734118, 69.634118, 69.534118,
+       69.434118, 69.334118, 69.234118, 69.134118, 69.034118, 68.934118,
+       68.834118, 68.734118, 68.634118, 68.534118, 68.434118, 68.334118,
+       68.234118, 68.134118, 68.034118, 67.934118, 67.834118, 67.734118,
+       67.634118, 67.534118, 67.434118, 67.334118, 67.234118, 67.134118,
+       67.034118, 66.934118, 66.834118, 66.734118, 66.634118, 66.534118,
+       66.434118, 66.334118, 66.234118, 66.134118, 66.034118, 65.934118,
+       65.834118, 65.734118, 65.634118, 65.534118, 65.434118, 65.334118,
+       65.234118, 65.134118, 65.034118, 64.934118, 64.834118, 64.734118,
+       64.634118, 64.534118, 64.434118, 64.334118, 64.234118, 64.134118,
+       64.034118, 63.934118, 63.834118, 63.734118, 63.634118, 63.534118,
+       63.434118, 63.334118, 63.234118, 63.134118, 63.034118, 62.934118,
+       62.834118, 62.734118, 62.634118, 62.534118, 62.434118, 62.334118,
+       62.234118, 62.134118, 62.034118, 61.934118, 61.834118, 61.734118,
+       61.634118, 61.534118, 61.434118, 61.334118, 61.234118, 61.134118,
+       61.034118, 60.934118, 60.834118, 60.734118, 60.634118, 60.534118,
+       60.434118, 60.334118, 60.234118, 60.134118, 60.034118, 59.934118,
+       59.834118, 59.734118, 59.634118, 59.534118, 59.434118, 59.334118,
+       59.234118, 59.134118, 59.034118, 58.934118, 58.834118, 58.734118,
+       58.634118, 58.534118, 58.434118, 58.334118, 58.234118, 58.134118,
+       58.034118, 57.934118, 57.834118, 57.734118, 57.634118, 57.534118,
+       57.434118, 57.334118, 57.234118, 57.134118, 57.034118, 56.934118,
+       56.834118, 56.734118, 56.634118, 56.534118, 56.434118, 56.334118,
+       56.234118, 56.134118, 56.034118, 55.934118, 55.834118, 55.734118,
+       55.634118, 55.534118, 55.434118, 55.334118, 55.234118, 55.134118,
+       55.034118, 54.934118, 54.834118, 54.734118, 54.634118, 54.534118,
+       54.434118, 54.334118])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>longitude</span></div><div class='xr-var-dims'>(longitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>2.056 2.156 2.256 ... 42.56 42.66</div><input id='attrs-d57be403-dcb4-4f93-bd89-e407376c7dad' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d57be403-dcb4-4f93-bd89-e407376c7dad' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-def1e333-9d76-47c9-8331-ce648810ab3f' class='xr-var-data-in' type='checkbox'><label for='data-def1e333-9d76-47c9-8331-ce648810ab3f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 2.055981,  2.155981,  2.255981, ..., 42.455981, 42.555981, 42.655981])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>2015-01-01 ... 2015-12-31</div><input id='attrs-14cbd07d-aace-4559-b01d-daab7e4c19a2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-14cbd07d-aace-4559-b01d-daab7e4c19a2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-eb203b16-d1ed-4810-af96-00a259a9ef04' class='xr-var-data-in' type='checkbox'><label for='data-eb203b16-d1ed-4810-af96-00a259a9ef04' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;2015-01-01T00:00:00.000000000&#x27;, &#x27;2015-01-02T00:00:00.000000000&#x27;,
+       &#x27;2015-01-03T00:00:00.000000000&#x27;, ..., &#x27;2015-12-29T00:00:00.000000000&#x27;,
+       &#x27;2015-12-30T00:00:00.000000000&#x27;, &#x27;2015-12-31T00:00:00.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-ab880985-48bc-47b9-9613-cea8cbc7a2fa' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ab880985-48bc-47b9-9613-cea8cbc7a2fa' class='xr-section-summary' >Data variables: <span>(1)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>rsn</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>-9.999e+03 ... -9.999e+03</div><input id='attrs-868727b6-5370-48a7-879b-66c76c248760' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-868727b6-5370-48a7-879b-66c76c248760' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2d3a50bc-1f7c-4b22-a836-6c83b09e6a9f' class='xr-var-data-in' type='checkbox'><label for='data-2d3a50bc-1f7c-4b22-a836-6c83b09e6a9f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>kg m**-3</dd><dt><span>long_name :</span></dt><dd>Snow density</dd></dl></div><div class='xr-var-data'><pre>array([[[-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        ...,
+        [-9999.     , -9999.     , -9999.     , ...,   259.67722,
+           259.67722, -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ...,   257.45886,
+           257.4447 , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ]],
+
+       [[-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+...
+        [-9999.     , -9999.     , -9999.     , ...,   208.48128,
+           208.48128, -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ...,   204.72586,
+           201.25702, -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ]],
+
+       [[-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        ...,
+        [-9999.     , -9999.     , -9999.     , ...,   224.17801,
+           224.17801, -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ...,   220.06871,
+           218.06679, -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ]]], dtype=float32)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-19960a3f-449b-42ce-8538-bff52aca232d' class='xr-section-summary-in' type='checkbox'  ><label for='section-19960a3f-449b-42ce-8538-bff52aca232d' class='xr-section-summary' >Attributes: <span>(57)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>transform :</span></dt><dd>(0.1, 0.0, 2.005980681272382, 0.0, -0.1, 71.88411766245547)</dd><dt><span>crs :</span></dt><dd>+init=epsg:4326</dd><dt><span>res :</span></dt><dd>(0.1, 0.1)</dd><dt><span>is_tiled :</span></dt><dd>0</dd><dt><span>nodatavals :</span></dt><dd>(-9999.0,)</dd><dt><span>scales :</span></dt><dd>(1.0,)</dd><dt><span>offsets :</span></dt><dd>(0.0,)</dd><dt><span>AREA_OR_POINT :</span></dt><dd>Area</dd><dt><span>NC_GLOBAL#Conventions :</span></dt><dd>CF-1.7</dd><dt><span>NC_GLOBAL#GRIB_centre :</span></dt><dd>eswi</dd><dt><span>NC_GLOBAL#GRIB_centreDescription :</span></dt><dd>Norrkoping</dd><dt><span>NC_GLOBAL#GRIB_edition :</span></dt><dd>2</dd><dt><span>NC_GLOBAL#GRIB_subCentre :</span></dt><dd>0</dd><dt><span>NC_GLOBAL#history :</span></dt><dd>2021-08-25T12:31 GRIB to CDM+CF via cfgrib-0.9.9.0/ecCodes-2.16.0 with {&quot;source&quot;: &quot;/cache/tmp/4b6329e3-a147-4457-8fa5-d753548c569e-adaptor.mars.external-1629894697.999834-24476-1-tmp.grib&quot;, &quot;filter_by_keys&quot;: {}, &quot;encode_cf&quot;: [&quot;parameter&quot;, &quot;time&quot;, &quot;geography&quot;, &quot;vertical&quot;]}</dd><dt><span>NC_GLOBAL#institution :</span></dt><dd>Norrkoping</dd><dt><span>NETCDF_DIM_EXTRA :</span></dt><dd>{time}</dd><dt><span>NETCDF_DIM_time_DEF :</span></dt><dd>{124,10}</dd><dt><span>NETCDF_DIM_time_VALUES :</span></dt><dd>{1420070400,1420092000,1420113600,1420135200,1420156800,1420178400,1420200000,1420221600,1420243200,1420264800,1420286400,1420308000,1420329600,1420351200,1420372800,1420394400,1420416000,1420437600,1420459200,1420480800,1420502400,1420524000,1420545600,1420567200,1420588800,1420610400,1420632000,1420653600,1420675200,1420696800,1420718400,1420740000,1420761600,1420783200,1420804800,1420826400,1420848000,1420869600,1420891200,1420912800,1420934400,1420956000,1420977600,1420999200,1421020800,1421042400,1421064000,1421085600,1421107200,1421128800,1421150400,1421172000,1421193600,1421215200,1421236800,1421258400,1421280000,1421301600,1421323200,1421344800,1421366400,1421388000,1421409600,1421431200,1421452800,1421474400,1421496000,1421517600,1421539200,1421560800,1421582400,1421604000,1421625600,1421647200,1421668800,1421690400,1421712000,1421733600,1421755200,1421776800,1421798400,1421820000,1421841600,1421863200,1421884800,1421906400,1421928000,1421949600,1421971200,1421992800,1422014400,1422036000,1422057600,1422079200,1422100800,1422122400,1422144000,1422165600,1422187200,1422208800,1422230400,1422252000,1422273600,1422295200,1422316800,1422338400,1422360000,1422381600,1422403200,1422424800,1422446400,1422468000,1422489600,1422511200,1422532800,1422554400,1422576000,1422597600,1422619200,1422640800,1422662400,1422684000,1422705600,1422727200}</dd><dt><span>rsn#coordinates :</span></dt><dd>time step surface latitude longitude valid_time</dd><dt><span>rsn#GRIB_cfName :</span></dt><dd>unknown</dd><dt><span>rsn#GRIB_cfVarName :</span></dt><dd>rsn</dd><dt><span>rsn#GRIB_dataType :</span></dt><dd>an</dd><dt><span>rsn#GRIB_DxInMetres :</span></dt><dd>11000</dd><dt><span>rsn#GRIB_DyInMetres :</span></dt><dd>11000</dd><dt><span>rsn#GRIB_gridDefinitionDescription :</span></dt><dd>Lambert conformal </dd><dt><span>rsn#GRIB_gridType :</span></dt><dd>lambert</dd><dt><span>rsn#GRIB_iScansNegatively :</span></dt><dd>0</dd><dt><span>rsn#GRIB_jPointsAreConsecutive :</span></dt><dd>0</dd><dt><span>rsn#GRIB_jScansPositively :</span></dt><dd>1</dd><dt><span>rsn#GRIB_LaDInDegrees :</span></dt><dd>48</dd><dt><span>rsn#GRIB_Latin1InDegrees :</span></dt><dd>48</dd><dt><span>rsn#GRIB_Latin2InDegrees :</span></dt><dd>48</dd><dt><span>rsn#GRIB_latitudeOfFirstGridPointInDegrees :</span></dt><dd>17.612</dd><dt><span>rsn#GRIB_latitudeOfSouthernPoleInDegrees :</span></dt><dd>0</dd><dt><span>rsn#GRIB_longitudeOfFirstGridPointInDegrees :</span></dt><dd>341.68</dd><dt><span>rsn#GRIB_longitudeOfSouthernPoleInDegrees :</span></dt><dd>0</dd><dt><span>rsn#GRIB_LoVInDegrees :</span></dt><dd>8</dd><dt><span>rsn#GRIB_missingValue :</span></dt><dd>9999</dd><dt><span>rsn#GRIB_name :</span></dt><dd>Snow density</dd><dt><span>rsn#GRIB_numberOfPoints :</span></dt><dd>319225</dd><dt><span>rsn#GRIB_NV :</span></dt><dd>0</dd><dt><span>rsn#GRIB_Nx :</span></dt><dd>565</dd><dt><span>rsn#GRIB_Ny :</span></dt><dd>565</dd><dt><span>rsn#GRIB_paramId :</span></dt><dd>33</dd><dt><span>rsn#GRIB_shortName :</span></dt><dd>rsn</dd><dt><span>rsn#GRIB_stepType :</span></dt><dd>instant</dd><dt><span>rsn#GRIB_stepUnits :</span></dt><dd>1</dd><dt><span>rsn#GRIB_typeOfLevel :</span></dt><dd>surface</dd><dt><span>rsn#GRIB_units :</span></dt><dd>kg m**-3</dd><dt><span>rsn#long_name :</span></dt><dd>Snow density</dd><dt><span>rsn#standard_name :</span></dt><dd>unknown</dd><dt><span>rsn#units :</span></dt><dd>kg m**-3</dd><dt><span>rsn#_FillValue :</span></dt><dd>nan</dd><dt><span>time#calendar :</span></dt><dd>proleptic_gregorian</dd><dt><span>time#long_name :</span></dt><dd>initial time of forecast</dd><dt><span>time#standard_name :</span></dt><dd>forecast_reference_time</dd><dt><span>time#units :</span></dt><dd>seconds since 1970-01-01</dd></dl></div></li></ul></div></div></div></div>
+</div>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>generate seasonal average</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geotiff_dm</span> <span class="o">=</span> <span class="n">geotiff_ds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;time.season&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">keep_attrs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">skipna</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geotiff_dm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:    (latitude: 176, longitude: 407, season: 4)
+Coordinates:
+  * latitude   (latitude) float64 71.83 71.73 71.63 71.53 ... 54.53 54.43 54.33
+  * longitude  (longitude) float64 2.056 2.156 2.256 2.356 ... 42.46 42.56 42.66
+  * season     (season) object &#x27;DJF&#x27; &#x27;JJA&#x27; &#x27;MAM&#x27; &#x27;SON&#x27;
+Data variables:
+    rsn        (season, latitude, longitude) float32 -9.999e+03 ... -9.999e+03
+Attributes: (12/57)
+    transform:                                    (0.1, 0.0, 2.00598068127238...
+    crs:                                          +init=epsg:4326
+    res:                                          (0.1, 0.1)
+    is_tiled:                                     0
+    nodatavals:                                   (-9999.0,)
+    scales:                                       (1.0,)
+    ...                                           ...
+    rsn#units:                                    kg m**-3
+    rsn#_FillValue:                               nan
+    time#calendar:                                proleptic_gregorian
+    time#long_name:                               initial time of forecast
+    time#standard_name:                           forecast_reference_time
+    time#units:                                   seconds since 1970-01-01</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-be43a188-e7f4-4b9a-b1bc-42b1985e2b46' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-be43a188-e7f4-4b9a-b1bc-42b1985e2b46' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>latitude</span>: 176</li><li><span class='xr-has-index'>longitude</span>: 407</li><li><span class='xr-has-index'>season</span>: 4</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-f4354e92-736e-4c5a-acf4-6aeda6331b4a' class='xr-section-summary-in' type='checkbox'  checked><label for='section-f4354e92-736e-4c5a-acf4-6aeda6331b4a' class='xr-section-summary' >Coordinates: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>latitude</span></div><div class='xr-var-dims'>(latitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>71.83 71.73 71.63 ... 54.43 54.33</div><input id='attrs-ec976557-8320-4c1f-92e9-67b461d8f9f4' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ec976557-8320-4c1f-92e9-67b461d8f9f4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d83ba6dc-4cc4-44e8-af71-103e5b64d2ca' class='xr-var-data-in' type='checkbox'><label for='data-d83ba6dc-4cc4-44e8-af71-103e5b64d2ca' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([71.834118, 71.734118, 71.634118, 71.534118, 71.434118, 71.334118,
+       71.234118, 71.134118, 71.034118, 70.934118, 70.834118, 70.734118,
+       70.634118, 70.534118, 70.434118, 70.334118, 70.234118, 70.134118,
+       70.034118, 69.934118, 69.834118, 69.734118, 69.634118, 69.534118,
+       69.434118, 69.334118, 69.234118, 69.134118, 69.034118, 68.934118,
+       68.834118, 68.734118, 68.634118, 68.534118, 68.434118, 68.334118,
+       68.234118, 68.134118, 68.034118, 67.934118, 67.834118, 67.734118,
+       67.634118, 67.534118, 67.434118, 67.334118, 67.234118, 67.134118,
+       67.034118, 66.934118, 66.834118, 66.734118, 66.634118, 66.534118,
+       66.434118, 66.334118, 66.234118, 66.134118, 66.034118, 65.934118,
+       65.834118, 65.734118, 65.634118, 65.534118, 65.434118, 65.334118,
+       65.234118, 65.134118, 65.034118, 64.934118, 64.834118, 64.734118,
+       64.634118, 64.534118, 64.434118, 64.334118, 64.234118, 64.134118,
+       64.034118, 63.934118, 63.834118, 63.734118, 63.634118, 63.534118,
+       63.434118, 63.334118, 63.234118, 63.134118, 63.034118, 62.934118,
+       62.834118, 62.734118, 62.634118, 62.534118, 62.434118, 62.334118,
+       62.234118, 62.134118, 62.034118, 61.934118, 61.834118, 61.734118,
+       61.634118, 61.534118, 61.434118, 61.334118, 61.234118, 61.134118,
+       61.034118, 60.934118, 60.834118, 60.734118, 60.634118, 60.534118,
+       60.434118, 60.334118, 60.234118, 60.134118, 60.034118, 59.934118,
+       59.834118, 59.734118, 59.634118, 59.534118, 59.434118, 59.334118,
+       59.234118, 59.134118, 59.034118, 58.934118, 58.834118, 58.734118,
+       58.634118, 58.534118, 58.434118, 58.334118, 58.234118, 58.134118,
+       58.034118, 57.934118, 57.834118, 57.734118, 57.634118, 57.534118,
+       57.434118, 57.334118, 57.234118, 57.134118, 57.034118, 56.934118,
+       56.834118, 56.734118, 56.634118, 56.534118, 56.434118, 56.334118,
+       56.234118, 56.134118, 56.034118, 55.934118, 55.834118, 55.734118,
+       55.634118, 55.534118, 55.434118, 55.334118, 55.234118, 55.134118,
+       55.034118, 54.934118, 54.834118, 54.734118, 54.634118, 54.534118,
+       54.434118, 54.334118])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>longitude</span></div><div class='xr-var-dims'>(longitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>2.056 2.156 2.256 ... 42.56 42.66</div><input id='attrs-a7a89385-89f0-4513-bf01-b8b52d874274' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a7a89385-89f0-4513-bf01-b8b52d874274' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a01f9fa3-5633-46f1-b9ac-ad0676c463bc' class='xr-var-data-in' type='checkbox'><label for='data-a01f9fa3-5633-46f1-b9ac-ad0676c463bc' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 2.055981,  2.155981,  2.255981, ..., 42.455981, 42.555981, 42.655981])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>season</span></div><div class='xr-var-dims'>(season)</div><div class='xr-var-dtype'>object</div><div class='xr-var-preview xr-preview'>&#x27;DJF&#x27; &#x27;JJA&#x27; &#x27;MAM&#x27; &#x27;SON&#x27;</div><input id='attrs-5d63539f-53eb-4512-954e-1b8eb62256ca' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5d63539f-53eb-4512-954e-1b8eb62256ca' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d86af8eb-536a-4b26-a602-7a1d4546035d' class='xr-var-data-in' type='checkbox'><label for='data-d86af8eb-536a-4b26-a602-7a1d4546035d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;DJF&#x27;, &#x27;JJA&#x27;, &#x27;MAM&#x27;, &#x27;SON&#x27;], dtype=object)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-f502a79b-6955-4c97-a897-99dce0709cf3' class='xr-section-summary-in' type='checkbox'  checked><label for='section-f502a79b-6955-4c97-a897-99dce0709cf3' class='xr-section-summary' >Data variables: <span>(1)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>rsn</span></div><div class='xr-var-dims'>(season, latitude, longitude)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>-9.999e+03 ... -9.999e+03</div><input id='attrs-61bac11b-9816-43a4-8ab5-0bbc01e564a7' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-61bac11b-9816-43a4-8ab5-0bbc01e564a7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b23176e2-4f5c-41b7-b001-9ed82ceac397' class='xr-var-data-in' type='checkbox'><label for='data-b23176e2-4f5c-41b7-b001-9ed82ceac397' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>kg m**-3</dd><dt><span>long_name :</span></dt><dd>Snow density</dd></dl></div><div class='xr-var-data'><pre>array([[[-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        ...,
+        [-9999.     , -9999.     , -9999.     , ...,   260.4165 ,
+           260.4165 , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ...,   258.54587,
+           258.11816, -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ]],
+
+       [[-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+...
+        [-9999.     , -9999.     , -9999.     , ..., -4537.341  ,
+         -4537.341  , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -4658.9937 ,
+         -4877.1167 , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ]],
+
+       [[-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ],
+        ...,
+        [-9999.     , -9999.     , -9999.     , ..., -4511.5576 ,
+         -4511.5576 , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -4626.429  ,
+         -4512.5737 , -9999.     ],
+        [-9999.     , -9999.     , -9999.     , ..., -9999.     ,
+         -9999.     , -9999.     ]]], dtype=float32)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-1d58a2c1-2ca8-482e-abd5-68f031443e8f' class='xr-section-summary-in' type='checkbox'  ><label for='section-1d58a2c1-2ca8-482e-abd5-68f031443e8f' class='xr-section-summary' >Attributes: <span>(57)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>transform :</span></dt><dd>(0.1, 0.0, 2.005980681272382, 0.0, -0.1, 71.88411766245547)</dd><dt><span>crs :</span></dt><dd>+init=epsg:4326</dd><dt><span>res :</span></dt><dd>(0.1, 0.1)</dd><dt><span>is_tiled :</span></dt><dd>0</dd><dt><span>nodatavals :</span></dt><dd>(-9999.0,)</dd><dt><span>scales :</span></dt><dd>(1.0,)</dd><dt><span>offsets :</span></dt><dd>(0.0,)</dd><dt><span>AREA_OR_POINT :</span></dt><dd>Area</dd><dt><span>NC_GLOBAL#Conventions :</span></dt><dd>CF-1.7</dd><dt><span>NC_GLOBAL#GRIB_centre :</span></dt><dd>eswi</dd><dt><span>NC_GLOBAL#GRIB_centreDescription :</span></dt><dd>Norrkoping</dd><dt><span>NC_GLOBAL#GRIB_edition :</span></dt><dd>2</dd><dt><span>NC_GLOBAL#GRIB_subCentre :</span></dt><dd>0</dd><dt><span>NC_GLOBAL#history :</span></dt><dd>2021-08-25T12:31 GRIB to CDM+CF via cfgrib-0.9.9.0/ecCodes-2.16.0 with {&quot;source&quot;: &quot;/cache/tmp/4b6329e3-a147-4457-8fa5-d753548c569e-adaptor.mars.external-1629894697.999834-24476-1-tmp.grib&quot;, &quot;filter_by_keys&quot;: {}, &quot;encode_cf&quot;: [&quot;parameter&quot;, &quot;time&quot;, &quot;geography&quot;, &quot;vertical&quot;]}</dd><dt><span>NC_GLOBAL#institution :</span></dt><dd>Norrkoping</dd><dt><span>NETCDF_DIM_EXTRA :</span></dt><dd>{time}</dd><dt><span>NETCDF_DIM_time_DEF :</span></dt><dd>{124,10}</dd><dt><span>NETCDF_DIM_time_VALUES :</span></dt><dd>{1420070400,1420092000,1420113600,1420135200,1420156800,1420178400,1420200000,1420221600,1420243200,1420264800,1420286400,1420308000,1420329600,1420351200,1420372800,1420394400,1420416000,1420437600,1420459200,1420480800,1420502400,1420524000,1420545600,1420567200,1420588800,1420610400,1420632000,1420653600,1420675200,1420696800,1420718400,1420740000,1420761600,1420783200,1420804800,1420826400,1420848000,1420869600,1420891200,1420912800,1420934400,1420956000,1420977600,1420999200,1421020800,1421042400,1421064000,1421085600,1421107200,1421128800,1421150400,1421172000,1421193600,1421215200,1421236800,1421258400,1421280000,1421301600,1421323200,1421344800,1421366400,1421388000,1421409600,1421431200,1421452800,1421474400,1421496000,1421517600,1421539200,1421560800,1421582400,1421604000,1421625600,1421647200,1421668800,1421690400,1421712000,1421733600,1421755200,1421776800,1421798400,1421820000,1421841600,1421863200,1421884800,1421906400,1421928000,1421949600,1421971200,1421992800,1422014400,1422036000,1422057600,1422079200,1422100800,1422122400,1422144000,1422165600,1422187200,1422208800,1422230400,1422252000,1422273600,1422295200,1422316800,1422338400,1422360000,1422381600,1422403200,1422424800,1422446400,1422468000,1422489600,1422511200,1422532800,1422554400,1422576000,1422597600,1422619200,1422640800,1422662400,1422684000,1422705600,1422727200}</dd><dt><span>rsn#coordinates :</span></dt><dd>time step surface latitude longitude valid_time</dd><dt><span>rsn#GRIB_cfName :</span></dt><dd>unknown</dd><dt><span>rsn#GRIB_cfVarName :</span></dt><dd>rsn</dd><dt><span>rsn#GRIB_dataType :</span></dt><dd>an</dd><dt><span>rsn#GRIB_DxInMetres :</span></dt><dd>11000</dd><dt><span>rsn#GRIB_DyInMetres :</span></dt><dd>11000</dd><dt><span>rsn#GRIB_gridDefinitionDescription :</span></dt><dd>Lambert conformal </dd><dt><span>rsn#GRIB_gridType :</span></dt><dd>lambert</dd><dt><span>rsn#GRIB_iScansNegatively :</span></dt><dd>0</dd><dt><span>rsn#GRIB_jPointsAreConsecutive :</span></dt><dd>0</dd><dt><span>rsn#GRIB_jScansPositively :</span></dt><dd>1</dd><dt><span>rsn#GRIB_LaDInDegrees :</span></dt><dd>48</dd><dt><span>rsn#GRIB_Latin1InDegrees :</span></dt><dd>48</dd><dt><span>rsn#GRIB_Latin2InDegrees :</span></dt><dd>48</dd><dt><span>rsn#GRIB_latitudeOfFirstGridPointInDegrees :</span></dt><dd>17.612</dd><dt><span>rsn#GRIB_latitudeOfSouthernPoleInDegrees :</span></dt><dd>0</dd><dt><span>rsn#GRIB_longitudeOfFirstGridPointInDegrees :</span></dt><dd>341.68</dd><dt><span>rsn#GRIB_longitudeOfSouthernPoleInDegrees :</span></dt><dd>0</dd><dt><span>rsn#GRIB_LoVInDegrees :</span></dt><dd>8</dd><dt><span>rsn#GRIB_missingValue :</span></dt><dd>9999</dd><dt><span>rsn#GRIB_name :</span></dt><dd>Snow density</dd><dt><span>rsn#GRIB_numberOfPoints :</span></dt><dd>319225</dd><dt><span>rsn#GRIB_NV :</span></dt><dd>0</dd><dt><span>rsn#GRIB_Nx :</span></dt><dd>565</dd><dt><span>rsn#GRIB_Ny :</span></dt><dd>565</dd><dt><span>rsn#GRIB_paramId :</span></dt><dd>33</dd><dt><span>rsn#GRIB_shortName :</span></dt><dd>rsn</dd><dt><span>rsn#GRIB_stepType :</span></dt><dd>instant</dd><dt><span>rsn#GRIB_stepUnits :</span></dt><dd>1</dd><dt><span>rsn#GRIB_typeOfLevel :</span></dt><dd>surface</dd><dt><span>rsn#GRIB_units :</span></dt><dd>kg m**-3</dd><dt><span>rsn#long_name :</span></dt><dd>Snow density</dd><dt><span>rsn#standard_name :</span></dt><dd>unknown</dd><dt><span>rsn#units :</span></dt><dd>kg m**-3</dd><dt><span>rsn#_FillValue :</span></dt><dd>nan</dd><dt><span>time#calendar :</span></dt><dd>proleptic_gregorian</dd><dt><span>time#long_name :</span></dt><dd>initial time of forecast</dd><dt><span>time#standard_name :</span></dt><dd>forecast_reference_time</dd><dt><span>time#units :</span></dt><dd>seconds since 1970-01-01</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">proj_plot</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">Mercator</span><span class="p">()</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">geotiff_dm</span><span class="p">[</span><span class="s1">&#39;rsn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span>
+                             <span class="n">aspect</span><span class="o">=</span><span class="n">geotiff_dm</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">geotiff_dm</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span>  <span class="c1"># for a sensible figsize</span>
+                             <span class="n">subplot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">proj_plot</span><span class="p">},</span>
+                             <span class="n">col</span><span class="o">=</span><span class="s1">&#39;season&#39;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">devon_r</span><span class="p">)</span>
+<span class="c1"># We have to set the map&#39;s options on all four axes</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span>  <span class="n">geotiff_dm</span><span class="o">.</span><span class="n">season</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Season &#39;</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">pyplot</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mf">15.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;UERRA_rsn.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/xarray/plot/facetgrid.py:390: UserWarning: Tight layout not applied. The left and right margins cannot be made large enough to accommodate all axes decorations. 
+  self.fig.tight_layout()
+</pre></div>
+</div>
+<img alt="../../_images/UERRA_ADAM_35_1.png" src="../../_images/UERRA_ADAM_35_1.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./examples/notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="MOD_AquaCHL_ADAM.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Using ADAM-API to access MODIS Aqua CHL</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="gridded_model_data_rolling_mean.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Rolling mean with CMIP6</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Pangeo<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

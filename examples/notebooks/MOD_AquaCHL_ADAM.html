@@ -1,0 +1,1090 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Using ADAM-API to access MODIS Aqua CHL &#8212; Pangeo Tutorial for the eScience Course 2022</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using ADAM-API to access UERRA regional reanalysis" href="UERRA_ADAM.html" />
+    <link rel="prev" title="MODIS Sea-ice" href="MODIS-seaice.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/pangeo_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Pangeo Tutorial for the eScience Course 2022</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome 👋
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Before the workshop
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../before/setup.html">
+   Setup: how to run the tutorial
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Pangeo 101
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/xarray_introduction.html">
+   Handling multi-dimensional arrays with xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/visualization.html">
+   Interactive plotting with holoviews
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/data_discovery.html">
+   Data access and discovery
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/chunking_introduction.html">
+   Chunking
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../pangeo101/dask_introduction.html">
+   Parallel computing with dask
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Resources and Examples
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../examples.html">
+   How to
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CMIP6-ocean.html">
+   Multidimensional Coordinates example using CMIP6 Pangeo ocean model data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="CMIP6_example.html">
+   Manipulation of CMIP6 model data using Pangeo catalog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="MODIS-seaice.html">
+   MODIS Sea-ice
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Using ADAM-API to access MODIS Aqua CHL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="UERRA_ADAM.html">
+   Using ADAM-API to access UERRA regional reanalysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gridded_model_data_rolling_mean.html">
+   Rolling mean with CMIP6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="masked_and_weighted_average.html">
+   Using masks and computing weighted average
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="nird-ESGF.html">
+   Using public data on NIRD using s3 and saving results in private s3 object storage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="projections.html">
+   Using cartopy and projections for plotting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-AERONET.html">
+   Reading AERONET data with pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-MODIS.html">
+   Reading MODIS data with xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="read-MODIS-SUB-XYD-xarray.html">
+   Read MODIS Terra/Aqua netcdf as xarray
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_larger_files_to_forces_bucket.html">
+   Save files from bucket to bucket
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_netcdf.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr-without_find.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="save_to_cesnet_bucket_zarr_s3fs.html">
+   Save files to EOSC (CESNET)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="search_and_load_with_esgf_opendap.html">
+   Search and Load CMIP6 Data via ESGF / OPeNDAP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="some-xarray-pandas-presentation_Sara.html">
+   Some tips with xarray and pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="xarray2pandas.html">
+   From xarray to pandas
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="xesmf_regridding.html">
+   Regridding model data with xESMF
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Beyond the workshop
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/resources.html">
+   Join the community!
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/pythia.html">
+   Project Pythia
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../afterword/envds-book.html">
+   Environmental Data Science Book
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://notebooks.gesis.org/binder/v2/gh/pangeo-data/escience-2022/main?urlpath=lab/tree/tutorial/examples/notebooks/MOD_AquaCHL_ADAM.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://pangeo-eosc.vm.fedcloud.eu/hub/user-redirect/git-pull?repo=https%3A//github.com/pangeo-data/escience-2022&urlpath=lab/tree/escience-2022/tutorial/examples/notebooks/MOD_AquaCHL_ADAM.ipynb&branch=main"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/pangeo-data/escience-2022"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/pangeo-data/escience-2022/issues/new?title=Issue%20on%20page%20%2Fexamples/notebooks/MOD_AquaCHL_ADAM.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/examples/notebooks/MOD_AquaCHL_ADAM.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#authenticate-to-adam-platform-with-adam-api-key">
+   Authenticate to ADAM platform with ADAM API key
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-mod-aqua-datasets">
+   Discover MOD_Aqua datasets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-metadata-from-modis-aqua-chlorophylle-concentration">
+   Get metadata from Modis Aqua Chlorophylle Concentration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-and-select-products-from-a-dataset">
+   Discover and select products from a dataset
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-data-over-artic-region">
+     Get data over Artic region
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#search-data">
+       Search data
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-data">
+   Get data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-analysis-and-visualization">
+   Data analysis and Visualization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unzip-data">
+     Unzip data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#read-data-in-xarray">
+   Read data in xarray
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Using ADAM-API to access MODIS Aqua CHL</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#authenticate-to-adam-platform-with-adam-api-key">
+   Authenticate to ADAM platform with ADAM API key
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-mod-aqua-datasets">
+   Discover MOD_Aqua datasets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-metadata-from-modis-aqua-chlorophylle-concentration">
+   Get metadata from Modis Aqua Chlorophylle Concentration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#discover-and-select-products-from-a-dataset">
+   Discover and select products from a dataset
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-data-over-artic-region">
+     Get data over Artic region
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#search-data">
+       Search data
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-data">
+   Get data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-analysis-and-visualization">
+   Data analysis and Visualization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unzip-data">
+     Unzip data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#read-data-in-xarray">
+   Read data in xarray
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualization">
+   Visualization
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="using-adam-api-to-access-modis-aqua-chl">
+<h1>Using ADAM-API to access MODIS Aqua CHL<a class="headerlink" href="#using-adam-api-to-access-modis-aqua-chl" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>you need to get an account to <a class="reference external" href="https://reliance.adamplatform.eu/">https://reliance.adamplatform.eu/</a> (use ORCID to authenticate) and key your ADAM API key</p></li>
+<li><p>make sure you save your ADAM API key in a file <code class="docutils literal notranslate"><span class="pre">$HOME/adam-key</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install adamapi
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">WARNING: The directory &#39;/home/jovyan/.cache/pip&#39; or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you may want sudo&#39;s -H flag.</span>
+Requirement already satisfied: adamapi in /opt/conda/lib/python3.8/site-packages (2.0.11)
+Requirement already satisfied: requests&gt;=2.22.0 in /opt/conda/lib/python3.8/site-packages (from adamapi) (2.25.1)
+Requirement already satisfied: imageio in /opt/conda/lib/python3.8/site-packages (from adamapi) (2.9.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (2020.12.5)
+Requirement already satisfied: chardet&lt;5,&gt;=3.0.2 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (4.0.0)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (2.10)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.22.0-&gt;adamapi) (1.26.4)
+Requirement already satisfied: pillow in /opt/conda/lib/python3.8/site-packages (from imageio-&gt;adamapi) (8.1.2)
+Requirement already satisfied: numpy in /opt/conda/lib/python3.8/site-packages (from imageio-&gt;adamapi) (1.20.1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">adamapi</span> <span class="k">as</span> <span class="nn">adam</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cmaps</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="authenticate-to-adam-platform-with-adam-api-key">
+<h2>Authenticate to ADAM platform with ADAM API key<a class="headerlink" href="#authenticate-to-adam-platform-with-adam-api-key" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adam_key</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span><span class="s2">&quot;adam-key&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">adam</span><span class="o">.</span><span class="n">Auth</span><span class="p">()</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">setKey</span><span class="p">(</span><span class="n">adam_key</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">setAdamCore</span><span class="p">(</span><span class="s1">&#39;https://reliance.adamplatform.eu&#39;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">authorize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;expires_at&#39;: &#39;2021-11-03T14:52:14.481Z&#39;,
+ &#39;access_token&#39;: &#39;18d781c8642a45779a6a7d9df8b679fd&#39;,
+ &#39;refresh_token&#39;: &#39;7ce4f620ce1848f9b34ae167d801de9b&#39;,
+ &#39;expires_in&#39;: 3600}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="discover-mod-aqua-datasets">
+<h2>Discover MOD_Aqua datasets<a class="headerlink" href="#discover-mod-aqua-datasets" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>This step is useful to get the dataset identifier (unique for a given datacube)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">discoverDasasets</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">search_name</span><span class="p">):</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">adam</span><span class="o">.</span><span class="n">Datasets</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">catalogue</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">getDatasets</span><span class="p">()</span>
+    <span class="c1">#Extracting the size of the catalogue</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">catalogue</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;totalResults&#39;</span><span class="p">]</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">catalogue</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;itemsPerPage&#39;</span><span class="p">]</span>
+    <span class="n">pages</span> <span class="o">=</span> <span class="n">total</span><span class="o">//</span><span class="n">items</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------------------------------------------------&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span> <span class="o">+</span> <span class="s1">&#39;List of available datasets:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+
+    <span class="c1">#Extracting the list of datasets across the whole catalogue</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">pages</span><span class="p">):</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">getDatasets</span><span class="p">(</span><span class="n">page</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]:</span> 
+            <span class="k">if</span> <span class="n">search_name</span> <span class="ow">in</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1m&quot;</span> <span class="o">+</span> <span class="s2">&quot; --&gt; datasetId &quot;</span><span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span> <span class="o">+</span> <span class="s2">&quot;= &quot;</span> <span class="o">+</span> <span class="n">element</span><span class="p">[</span><span class="s1">&#39;datasetId&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">datasets</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datasets</span> <span class="o">=</span> <span class="n">discoverDasasets</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;MOD_Aqua&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------
+<span class=" -Color -Color-Bold">List of available datasets:</span>
+
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-metadata-from-modis-aqua-chlorophylle-concentration">
+<h2>Get metadata from Modis Aqua Chlorophylle Concentration<a class="headerlink" href="#get-metadata-from-modis-aqua-chlorophylle-concentration" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datasetID</span> <span class="o">=</span> <span class="s1">&#39;69618:MODh20chlMO_4km&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1;34m&#39;</span> <span class="o">+</span> <span class="s1">&#39;Metadata of &#39;</span> <span class="o">+</span> <span class="n">datasetID</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0;0m&#39;</span><span class="p">)</span>
+
+<span class="n">paged</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">getDatasets</span><span class="p">(</span><span class="n">datasetID</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">paged</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1m&quot;</span> <span class="o">+</span>  <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="discover-and-select-products-from-a-dataset">
+<h2>Discover and select products from a dataset<a class="headerlink" href="#discover-and-select-products-from-a-dataset" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>for a given time range and spatial coverage</p></li>
+</ul>
+<section id="get-data-over-artic-region">
+<h3>Get data over Artic region<a class="headerlink" href="#get-data-over-artic-region" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>The geometry field is extracted from a GeoJSON object , retrieving the value of the “feature” element.</p></li>
+</ul>
+<section id="search-data">
+<h4>Search data<a class="headerlink" href="#search-data" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p>only print the first 10 products</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">adamapi</span> <span class="kn">import</span> <span class="n">Search</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The GeoJson object needs to be rearranged according to the counterclockwise winding order.This operation is executed in the next few lines to obtain a geometry that meets the requirements of the method. Geom_1 is the final result to be used in the discovery operation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geom_1</span> <span class="o">=</span> <span class="s2">&quot;{&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[-180, 90], [180, 90], [180, 60], [-180, 60], [-180, 90]]]}&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_date</span> <span class="o">=</span> <span class="s1">&#39;2003-01-01&#39;</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="s1">&#39;2003-12-31&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search</span> <span class="o">=</span> <span class="n">Search</span><span class="p">(</span> <span class="n">a</span> <span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">getProducts</span><span class="p">(</span>
+    <span class="n">datasetID</span><span class="p">,</span> 
+    <span class="n">geometry</span><span class="o">=</span> <span class="n">geom_1</span><span class="p">,</span>
+    <span class="n">startDate</span> <span class="o">=</span> <span class="n">start_date</span><span class="p">,</span>
+    <span class="n">endDate</span> <span class="o">=</span> <span class="n">end_date</span>
+ <span class="p">)</span>
+
+<span class="c1"># Printing the results</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1m&#39;</span> <span class="o">+</span> <span class="s1">&#39;List of available products:&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]:</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31;1m&quot;</span> <span class="o">+</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;------------------------------------&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="get-data">
+<h2>Get data<a class="headerlink" href="#get-data" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>be aware that you alwasy get daily average from ADAM-API</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getZipData</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;outputFname&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">or</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;outputFname&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">adam</span><span class="o">.</span><span class="n">GetData</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span>
+        <span class="n">datasetId</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;datasetID&#39;</span><span class="p">],</span>
+        <span class="n">startDate</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;startDate&#39;</span><span class="p">],</span>
+        <span class="n">endDate</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;endDate&#39;</span><span class="p">],</span>
+        <span class="n">geometry</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">],</span>
+        <span class="n">outputFname</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;outputFname&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">output_file</span> <span class="o">=</span> <span class="s1">&#39;./MOD_Aqua_mass_concentration_chlorophyll_concentration_in_sea_water_&#39;</span> <span class="o">+</span> <span class="n">start_date</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">end_date</span> <span class="o">+</span> <span class="s1">&#39;.zip&#39;</span>
+
+<span class="n">datasetInfo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;datasetID&#39;</span>   <span class="p">:</span> <span class="n">datasetID</span><span class="p">,</span>
+    <span class="s1">&#39;startDate&#39;</span>   <span class="p">:</span> <span class="n">start_date</span><span class="p">,</span>
+    <span class="s1">&#39;endDate&#39;</span>     <span class="p">:</span> <span class="n">end_date</span><span class="p">,</span>
+    <span class="s1">&#39;geometry&#39;</span>    <span class="p">:</span> <span class="n">geom_1</span><span class="p">,</span>
+    <span class="s1">&#39;outputFname&#39;</span> <span class="p">:</span> <span class="n">output_file</span>
+    <span class="p">}</span>
+<span class="n">getZipData</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">datasetInfo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-analysis-and-visualization">
+<h2>Data analysis and Visualization<a class="headerlink" href="#data-analysis-and-visualization" title="Permalink to this headline">#</a></h2>
+<section id="unzip-data">
+<h3>Unzip data<a class="headerlink" href="#unzip-data" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unzipData</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">unzipData</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="read-data-in-xarray">
+<h2>Read data in xarray<a class="headerlink" href="#read-data-in-xarray" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">paths_to_datetimeindex</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+    <span class="k">return</span>  <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">t</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getData</span><span class="p">(</span><span class="n">dirtif</span><span class="p">,</span> <span class="n">varname</span><span class="p">):</span>
+    <span class="n">geotiff_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">dirtif</span><span class="p">)</span>
+    <span class="c1"># Create variable used for time axis</span>
+    <span class="n">time_var</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">paths_to_datetimeindex</span><span class="p">(</span><span class="n">geotiff_list</span><span class="p">))</span>
+    <span class="c1"># Load in and concatenate all individual GeoTIFFs</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">xr</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">parse_coordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">geotiff_list</span><span class="p">],</span>
+                        <span class="n">dim</span><span class="o">=</span><span class="n">time_var</span><span class="p">)</span>
+    <span class="c1"># Covert our xarray.DataArray into a xarray.Dataset</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">to_dataset</span><span class="p">(</span><span class="s1">&#39;band&#39;</span><span class="p">)</span>
+    <span class="c1"># Rename the dimensions to make it CF-convention compliant</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">rename_dims</span><span class="p">({</span><span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="s1">&#39;longitude&#39;</span><span class="p">})</span>
+    <span class="c1"># Rename the variable to a more useful name</span>
+    <span class="n">geotiffs_da</span> <span class="o">=</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">rename_vars</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="n">varname</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="s1">&#39;longitude&#39;</span><span class="p">})</span>
+    <span class="c1"># set attribute to variable</span>
+    <span class="n">geotiffs_da</span><span class="p">[</span><span class="n">varname</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;units&#39;</span> <span class="p">:</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">varname</span> <span class="o">+</span> <span class="s1">&#39;#units&#39;</span><span class="p">],</span> <span class="s1">&#39;long_name&#39;</span> <span class="p">:</span> <span class="n">geotiffs_da</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">varname</span> <span class="o">+</span> <span class="s1">&#39;#long_name&#39;</span><span class="p">]}</span>
+    <span class="k">return</span> <span class="n">geotiffs_da</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span> <span class="s1">&#39;*.tif&#39;</span><span class="p">)</span>
+<span class="n">geotiff_ds</span> <span class="o">=</span> <span class="n">getData</span><span class="p">(</span><span class="n">path_files</span><span class="p">,</span> <span class="s1">&#39;chlor_a&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geotiff_ds</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="c1"># Define the projection</span>
+<span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+
+<span class="c1"># We&#39;re using cartopy and are plotting in Orthographic projection </span>
+<span class="c1"># (see documentation on cartopy)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">Mercator</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mf">12.0</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;10m&#39;</span><span class="p">)</span>
+
+<span class="c1"># We need to project our data to the new Mercator projection and for this we use `transform`.</span>
+<span class="c1"># we set the original data projection in transform (here PlateCarree)</span>
+<span class="c1"># we only plot values greather than 0</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">geotiff_ds</span><span class="p">[</span><span class="s1">&#39;chlor_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span>  <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmaps</span><span class="o">.</span><span class="n">BlueYellowRed</span><span class="p">)</span>  
+
+<span class="c1"># Title for plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Mass concentration chlorophyll concentration in sea water </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span> <span class="o">=</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Mod_Aqua-chlor_ARCTIC.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geotiff_ds</span><span class="p">[</span><span class="s1">&#39;chlor_a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="s1">&#39;MOD_Aqua_Chl_arctic_2003.nc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./examples/notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="MODIS-seaice.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">MODIS Sea-ice</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="UERRA_ADAM.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Using ADAM-API to access UERRA regional reanalysis</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Pangeo<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
