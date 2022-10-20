@@ -1,15 +1,14 @@
 # Welcome 👋
 
 :::{tip}
-This work used advanced computing resources from the [CESNET](https://www.cesnet.cz/?lang=en) resource centre of the [EGI federation](https://www.egi.eu/egi-federation/). The services are co-funded by the [EGI-ACE project](https://www.egi.eu/project/egi-ace/), grant number 101017567.
+This work used advanced computing resources from the [CESNET](https://www.cesnet.cz/?lang=en) resource centre of the [EGI federation](https://www.egi.eu/egi-federation/). The services are co-funded by the [EGI-ACE project](https://www.egi.eu/project/egi-ace/), grant number 101017567. We also would like to thank the Pangeo Europe Team and in particular Guillaume Eynard-Bontemps and Jean Iaquinta for the Pangeo deployment, and Anne Fouilloux and Tina Odaka for the training material content and delivery.**
 :::
 
 
-## Arctic Processes in CMIP6 bootcamp
+## eScience Course
 
-The Arctic Processes in CMIP6 bootcamp is taking place from 11 to 21 October 2022 at Søminestationen (Denmark). It is organized by CLIVAR [CLIVAR/CliC Northern Oceans Region Panel](https://www.clivar.org/clivar-panels/northern).
-
-See more information at [Arctic Processes in CMIP6 bootcamp](https://www.clivar.org/events/arctic-processes-cmip6-bootcamp).
+The eScience course is taking place 31 October to 11 November 2022 at Tjärnö Marine Laboratory (plus 28-30 November for remote presentations of final results).
+See more information [here](https://www.aces.su.se/research/projects/escience-tools-in-climate-science-linking-observations-with-modelling/)
 
 ## The European Open Science Cloud (EOSC)
 

@@ -1,4 +1,4 @@
-name: clivar
+name: escience
 channels:
   - conda-forge
   - defaults
