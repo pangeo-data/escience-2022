@@ -48,4 +48,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-**This work used advanced computing resources from the CESNET resource centre of the EGI federation. The services are co-funded by the EGI-ACE project (https://www.egi.eu/project/egi-ace/, grant number 101017567). We also would like to thank the Pangeo Europe Team and in particular Guillaume Eynard-Bontemps and Jean Iaquinta for the Pangeo deployment, and Anne Fouilloux and Tina Odaka for the training material content and delivery.**
+**This work used advanced computing resources from the CESNET resource centre of the EGI federation. The services are co-funded by the EGI-ACE project (https://www.egi.eu/project/egi-ace/, grant number 101017567).**
+
+**We also would like to thank the Pangeo Europe Team and in particular Guillaume Eynard-Bontemps and Jean Iaquinta for the Pangeo deployment, and Anne Fouilloux and Tina Odaka for the training material content and delivery.**
