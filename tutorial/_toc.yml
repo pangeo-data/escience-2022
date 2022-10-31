@@ -8,6 +8,7 @@ parts:
 - caption: Before the workshop
   chapters:
   - file: before/setup
+  - file: examples/EOSC_to_bucket
 
 - caption: Pangeo 101
   chapters:
