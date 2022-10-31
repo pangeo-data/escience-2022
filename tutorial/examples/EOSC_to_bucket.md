@@ -15,73 +15,81 @@ We will need different 'token' 'key' to proceed with object storage.  Here are t
 
 ## Setup your command line enviroment
 
-First, we need a command line on your jupyterlab environment.  Start a terminal from a launcher.  
-Then create an openstack environment using mamba.  
+### First install required Python packages
+
+Open a Terminal in your JupyterLab and create a new environment called `egi`:
 
 ```
-mamba create -n openstack  python jq s3fs gcc awscli --yes  -c conda-forge
-conda deactivate
-conda activate openstack
+conda create -n egi python jq --yes
+conda activate egi
 pip install fedcloudclient
 ```
 
-## Connect your environment with EGI Check-In
+See more information about `fedcloudclient` in: https://fedcloudclient.fedcloud.eu/. Installing `fedcloudclient` will also install required `openstackclient`.
 
-If your access token is not created yet, create it at [https://aai.egi.eu/token/](https://aai.egi.eu/token/).
-
-It is a very long string, but do not worry, copy and past it instead of `<your_token>` (without any space beofore or after the `=` sign) like below:
-
-
-```
-export OIDC_ACCESS_TOKEN=`<your_token>`
-```
-
-Now plz check if your fedcloud token works with following command
-
+You should be able to issue:
 ```
 fedcloud token check
 ```
 
-Next, copy and paste following command to access pangeo object storage.  
+But you don't have a token yet... So let's get your access token from EGI Check-in.
+
+## Get your access token from EGI Check-In
+
+Go to https://aai.egi.eu/token/ to [obtain your access token](https://docs.egi.eu/users/aai/check-in/obtaining-tokens/token-portal/). Copy your access token, and then set it:
+
+```
+export OIDC_ACCESS_TOKEN=<your_token>
+fedcloud token check
+```
+
+Last command should return a valid token.
+
+### Use Openstack to access escience project storage
+
+
+We need to use `openstack` commands to access the escience project storage.
+
+
+Please configure these environment variables:
 ```
 export OS_AUTH_URL=https://identity.cloud.muni.cz/v3
 export OS_AUTH_TYPE=v3oidcaccesstoken
 export OS_PROTOCOL=openid
 export OS_IDENTITY_PROVIDER=egi.eu
 export OS_ACCESS_TOKEN=$OIDC_ACCESS_TOKEN
-export OS_PROJECT_ID=57102d3e06b7476088fe4924370ae170
 export OS_STORAGE_URL=https://object-store.cloud.muni.cz/swift/v1
+```
 
+Then we can configure the project ID accordingly. For the eScience workshop:
+```
+# eScience workshop:
+# https://www.aces.su.se/research/projects/escience-tools-in-climate-science-linking-observations-with-modelling/
+export OS_PROJECT_ID=5e5a45e153d3424997fda0c4fd21a21f
+```
+
+Then the following command should work:
+```
 openstack container list
-
 ```
-
-If the last command returns something similar to
-
-```
-+------------+
-| Name       |
-+------------+
-| WG1        |
-| input-data |
-| test-gey   |
-| test-slv   |
-| tmp        |
-+------------+
-```
-then
-you are good, properly identified and connected with EOSC cesnet hosted openstack based  pangeo private backet..  
 
 ## Retrieve Openstack token for Swift
 
-You can run following command to retrive your openstack token
-This token 
 ```
+# get OS_AUTH_TOKEN
 $ openstack token issue -c id -f value
 ```
 
+You'll need `OS_AUTH_TOKEN` and `OS_STORAGE_URL` in order to interact with Swift using Zarr.
+
 
 ## Connect your environment with pangeo-eosc object storage. 
+
+### Retrieve S3 credentials
+
+CESNET provides the following self-service to get S3 credentials:
+https://docs.cloud.muni.cz/cloud/advanced-features/#s3-credentials.
+
 
 You need a pair of Access and Secret keys (`aws_access_key_id` and `aws_secret_access_key`)
 in order to have read-write access to pangeo-eosc object store space from your enviroment
@@ -106,6 +114,9 @@ Then list the credentials created by issuing the `credentials list` command :
 openstack ec2 credentials list 
 ```
 
+
+This will provide `access` and `secret` keys that you need to interact with the escience object storage from the Jupyter Notebook. The `endpoint` URL is: `https://object-store.cloud.muni.cz/`.
+
 This will provide you `aws_access_key_id` and `aws_secret_access_key`
 
 ```
@@ -118,6 +129,7 @@ This will provide you `aws_access_key_id` and `aws_secret_access_key`
 
 ```
 
+
 Copy the values at `x1xx` and `x2xx` and past them instead of `x1xx` and `x2xx` in the next command:
 
 ```
@@ -125,4 +137,6 @@ aws configure set aws_access_key_id x1xx
 aws configure set aws_secret_access_key x2xx
 ``` 
 
+
+__Be really careful of what you do with your credentials, e.g. avoid living them into notebooks!!!__
 
