@@ -24,6 +24,11 @@ conda create -n egi python jq --yes
 conda activate egi
 pip install fedcloudclient
 ```
+Eventually update conda first:
+```
+conda update -n base conda
+```
+
 
 See more information about `fedcloudclient` in: https://fedcloudclient.fedcloud.eu/. Installing `fedcloudclient` will also install required `openstackclient`.
 
